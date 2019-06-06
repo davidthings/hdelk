@@ -5,8 +5,11 @@ header:
   overlay_image: /assets/images/banner.svg
 ---
 
+## Introduction
 
-HDElk is a web-based HDL diagramming tool.  It was designed to permit the easy visual representation of Verilog or VHDL (generically HDL's, Hardware Description Languages) in web pages by creation of simple javascript specification objects.
+HDElk is a web-based diagramming tool designed to permit the easy visual representation of diagrams which feature sets of interconnected nodes in web pages.  The diagram is described in [JSON](https://www.json.org/) and then rendered in [SVG](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics)
+
+One area that uses interconnected nodes is FPGA programming in Hardware Description Languages (HDL's) like Verilog and VHDL.  HDElk came about in response to a need to document an FPGA library, but it is not limited to FPGA applications.
 
 What follows is an overview of the project, but if you're eager to get in to the details, here are the quick links.
 
@@ -15,7 +18,7 @@ What follows is an overview of the project, but if you're eager to get in to the
 
 ## Motivation
 
-There are many many diagramming solutions, so why HDElk?  Mostly because the other solutions use an online editor and to varying degrees are WYSIWYG. This means it is sometimes hard to control the look and feel of a diagram, and it can also be quite hard to maintain (for example, change the name of something, change the size of all nodes, etc.).  The great project [WaveDrom](https://wavedrom.com/) shows the way: let the user describe the diagram in JSON, then just render it.  What does WaveDrom do?
+There are many many diagramming solutions, so why HDElk?  Mostly because the other solutions use an online editor and to varying degrees are WYSIWYG. This means it is sometimes hard to control the look and feel of a diagram, and it can also be quite hard to maintain (for example, change the name of something, change the size of all nodes, etc.).  The great project [WaveDrom](https://wavedrom.com/) shows the way.  Its job is to draw waveforms, but rather than provide an online WYSIWYG tool, it lets the user describe the diagram in JSON right in the page.  Wavedrom then renders the wave in SVG.
 
 ![]({{site.baseurl}}/assets/images/wavedrom.png)
 
@@ -25,7 +28,7 @@ Back to rendering HDL, it should be noted that a much more sophisticated tool th
 
 ![]({{site.baseurl}}/assets/images/netlistsvg.svg)
 
-This is an SVG sample from the home page.  Clearly if you want real diagrams generated from actual code, NetListSVG is the project to look into.  NetListSVG uses [Elk.JS](https://github.com/OpenKieler/elkjs) for its layout, and was an inspiration for the present project.
+This is an SVG sample from the home page.  Clearly if you want real diagrams generated from actual code, NetListSVG is the project to look into.  NetListSVG uses [Elk.JS](https://github.com/OpenKieler/elkjs) for its layout, and was an inspiration for HDElk.
 
 ## Simple Example
 
@@ -57,9 +60,13 @@ What does HDElk do, and what does it look like?  Here's a simple diagram
 
 There are nested nodes, and edges that connect them together, via node ports.  Edge direction is represented by a small glyph on the end and there is a mechanism to represent buses (thicker lines) as distinct from plain wires.
 
-And here's the code that created it
+And here's the code that created it.  If you view the source of this page, you'll see the exact code below twice!  Once doing the work and another time for the documentation.
+
+<!-- Hi! -->
 
 ```js
+<div id="simple_diagram"></div>
+
 <script type="text/javascript">
 
     var simple_graph = {
@@ -82,11 +89,13 @@ And here's the code that created it
     hdelk.layout( simple_graph, "simple_diagram" );
 </script>
 ```
-While this is very far from Verilog or VHDL, you can see that the structure is set out in relatively simple JSON, with no hints as to how it should appear.  ElkJS (nee Elk) does all the layout work automatically for us.
+While this is very far from Verilog or VHDL, you can see that the structure is set out in relatively simple JSON, with no hints as to how it should appear.  HDElk does all the layout work automatically for us, finally adding the SVG into the web page `<div>`
 
-`children` is an array of nodes, which may have ports and may describe other things that modify the node's appearance or behavior, like labels, highlighting and so on.
+We'll cover this much more in the [Tutorial]({{site.baseurl}}/tutorial) but for now there are two main features to point out:
 
-`edges` is an array of connections between child nodes, where each edge describes its start and end point, whether it's a bus or not and whether it is highlighted.
+- `children` is an array of nodes, which may have ports and may describe other things that modify the node's appearance or behavior, like labels, highlighting and so on.
+
+- `edges` is an array of connections between child nodes, where each edge describes its start and end point, whether it's a bus or not and whether it is highlighted.
 
 For completeness, somewhere the following library files need to be loaded
 
