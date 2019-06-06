@@ -134,13 +134,15 @@ What about more nodes?
         id:"",
         children:[
             { id:"C1", ports:[ "In", "Out" ] },
-            { id:"C2", ports:[ "In", "Output" ] },
+            { id:"C2", ports:[ "In", { id:"O", label:"Output" } ] },
             { id:"C3" }
         ]
     }
 
     hdelk.layout( graph, "more_ports" );
 </script>
+
+Nodes and ports get added to the diagram with different sizes and shapes being accommodated.
 
 Here's the code
 
@@ -149,13 +151,12 @@ var graph = {
     id:"",
     children:[
         { id:"C1", ports:[ "In", "Out" ] },
-        { id:"C2", ports:[ "In", "Output" ] },
+        { id:"C2", ports:[ "In", { id:"O", label:"Output" } ] },
         { id:"C3" }
     ]
 }
 ```
-
-Nodes and ports get added to the diagram with different sizes and shapes being accomodated.
+Note here for `Output` a longer form of Port description is used - an object instead of a string.  This is required when ports need more properties than the simple id.  Here the `id` is something simple, and the label that appears is different.
 
 Each child in the `Children` structure is formed identically and should have a unique name.  Watch for correct comma use.  Leaving them off is easy to do and causes parsing errors!
 
@@ -845,7 +846,7 @@ Common errors are not getting the labels right in edge specifications, and missi
 
 Here are two final diagrams, illustrating all of the above JSON specification techniques.
 
-This first monster is especially interesting because of its use of a complex internal port and also a variety of different edge specification styles.
+This first monster is especially interesting because of its use of a complex internal port and also a variety of different edge and port specification styles.
 
 <script>
     var dg = {

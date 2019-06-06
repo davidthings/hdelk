@@ -109,7 +109,7 @@ For completeness, somewhere the following library files need to be loaded
 
 The system is based around [ElkJS](https://github.com/OpenKieler/elkjs), a Javascript translation of [Elk](https://www.eclipse.org/elk/), the Eclipse Layout Kernel.  This codebase takes textual specifications of a graph of nodes and edges and arranges them into something that can be displayed on a 2D screen.  That is where ElkJs ends, with a JavaScript object with added locations and sizes.  From there something has to render the objects, adding styles, etc.  This is what HDElk does, with the help of [SVG.js](https://svgjs.com/), a small library that makes generating SVG trivial.
 
-ElkJS uses a rather verbose form of description, requiring node sizes, describing edges in a rather verbose form, etc.,
+ElkJS uses a rather long form of description.
 
 ```js
 const graph = {
@@ -127,7 +127,7 @@ const graph = {
 }
 ```
 
-This snippet is from the ElkJS home page, illustrating how it can be a little long winded.  Ports are not even presented there.  They are another large structure.
+This snippet is from the ElkJS home page, illustrating how it can be a little long winded.  Ports are not even presented in this snippet - they are another large structure.
 
 To get around the lengthy input files, HDElk provides a simple preprocessor that takes a simplified form of diagram description and outputs what is required for ElkJS to run.
 
@@ -145,17 +145,57 @@ removing the need to explicitly name the edge, and removing the arrays needed fo
 
 we remove the need for the object and replacing it with a much simpler array of two strings.
 
-So the picture of what happens when you submit a graph to HDElk is shown (roughly) below:
+Here's how the same description would look in HDElk
+
+```js
+var graph = {
+  id: "root",
+  children: [
+    { id: "n1" },
+    { id: "n2" },
+    { id: "n3" }
+  ],
+  edges: [
+    ["n1","n2" ],
+    ["n1","n3" ]
+  ]
+}
+```
+
+And here it is rendered by HDElk
+
+<div id="improved"></div>
+
+<script type="text/javascript">
+
+var graph = {
+  id: "root",
+  children: [
+    { id: "n1" },
+    { id: "n2" },
+    { id: "n3" }
+  ],
+  edges: [
+    ["n1","n2" ],
+    ["n1","n3" ]
+  ]
+}
+
+    hdelk.layout( graph, "improved" );
+</script>
+
+
+Roughly what happens when you submit a graph to HDElk is shown below:
 
 <div id="hdelk_diagram"></div>
 
 <script type="text/javascript">
 
     const hdelk_graph = {
-        id: "HDElk FLOW",
+        id: "HDElk Flow",
         children: [
             { id: "diagram", highlight:2, type:"JSON" },
-            { id: "HDElk", highlight:1, label:"", height:80, ports: [ "layout()", "svg"  ],
+            { id: "HDElk", highlight:1, label:"", height:80, ports: [ "layout()", {id:"svg",label:" "}  ],
                 children: [
                     { id: "transform()", width:90, type:"JavaScript" },
                     { id: "Elk.js", type:"Library" },
@@ -170,15 +210,22 @@ So the picture of what happens when you submit a graph to HDElk is shown (roughl
                     ["SVG.js", "HDElk.svg" ],
                 ]
             },
-            { id: "webpage", highlight:4, type:"HTML", ports: [ "div" ] }
+            { id: "webpage", highlight:4, type:"HTML", ports: [ "<div>" ] }
         ],
-        edges: [ ["diagram","HDElk.layout()"], ["HDElk.svg","webpage.div"] ]
+        edges: [ ["diagram","HDElk.layout()"], ["HDElk.svg","webpage.<div>"] ]
     }
 
     hdelk.layout( hdelk_graph, "hdelk_diagram" );
 </script>
 
-HDElk uses Elk.js to do layout, and SVG.JS to generate the output.  The two main functions that do HDElk work are `transform()` and `diagram()` both are short, simple and live in HDElk.  The idea is that anyone who uses it should just be able to reach into these functions and modify them to their liking.
+- The diagram is described in JSON, and passed to HDElk.layout() along with a `<div>` id.
+- HDElk then calls `transform()` to convert the compact HDElk description into the format Elk.js can use.
+- Elk.js does its magic, adding dimensions and locations to the diagram description and returning this back to HDElk.
+- `HDElk.diagram()` recursively operates on the post-Elk diagram description creating the appearance of the diagram.
+- It calls SVG.JS to help generate the SVG output.
+- HDElk's last act is to insert the SVG into the appropriate host page's `<div>`.
+
+The two main functions that do HDElk work are `transform()` and `diagram()` both are short, simple and live in `hdelk.js`.  There is no language translation step, no bundler or publisher.  The idea is that anyone who uses the project should just be able to reach into these functions and modify them if they wish.
 
 ## Future Work
 
