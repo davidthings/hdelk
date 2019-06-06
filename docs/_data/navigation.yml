@@ -1,13 +1,13 @@
 # main links
 main:
   - title: "Installation"
-    url: /installation/
+    url: installation/
   - title: "Tutorial"
-    url: /tutorial/
+    url: tutorial/
   - title: "GitHub"
     url: https://github.com/davidthings/hdelk
   - title: "News"
-    url: /news/
+    url: news/
 
   #- title: "Quick-Start Guide"
   #  url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
