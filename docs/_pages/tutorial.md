@@ -810,41 +810,11 @@ Appearance changes can be made in the `hdelk.diagram( )` function.  It takes the
 
 Common errors are not getting the labels right in edge specifications, and missing commas in lists of edges or components.  Of course brace and parenthesis mismatches are their usual hell.
 
-<div id="HDElk_diagram"></div>
-
-<script type="text/javascript">
-
-    const HDElk_graph = {
-        id: "HDElk FLOW",
-        children: [
-            { id: "diagram", highlight:2, type:"JSON" },
-            { id: "HDElk", highlight:1, label:"", height:80, ports: [ "layout()", "svg"  ],
-                children: [
-                    { id: "transform()", width:90, type:"JavaScript" },
-                    { id: "Elk.js", type:"Library" },
-                    { id: "diagram()", type:"JavaScript" },
-                    { id: "SVG.js", type:"Library" },
-                ],
-                edges:[
-                    ["HDElk.layout()", "transform()" ],
-                    ["transform()", "Elk.js" ],
-                    ["Elk.js", "diagram()" ],
-                    ["diagram()", "SVG.js" ],
-                    ["SVG.js", "HDElk.svg" ],
-                ]
-            },
-            { id: "webpage", highlight:4, type:"HTML", ports: [ "div" ] }
-        ],
-        edges: [ ["diagram","HDElk.layout()"], ["HDElk.svg","webpage.div"] ]
-    }
-
-    hdelk.layout( HDElk_graph, "HDElk_diagram" );
-</script>
 
 
 ## Extra Diagrams
 
-Here are two final diagrams, illustrating all of the above JSON specification techniques.
+Here are three final diagrams, illustrating all of the above JSON specification techniques.
 
 This first monster is especially interesting because of its use of a complex internal port and also a variety of different edge and port specification styles.
 
@@ -962,7 +932,66 @@ Note the `n7` child `pIn`, which is a port and which has sub-ports itself.
 
 The `main` and `n7` nodes also have just about every different kind of edge specification.
 
-Finally, here's the diagram that appears as the banner on this site, illustrating different background colors.
+The "How it Works" diagram shows non-HDL use of HDElk.  One could argue that it is not perfectly suited to documenting conventional code!
+
+<div id="HDElk_diagram"></div>
+
+<script type="text/javascript">
+
+    const HDElk_graph = {
+        id: "HDElk FLOW",
+        children: [
+            { id: "diagram", highlight:2, type:"JSON" },
+            { id: "HDElk", highlight:1, label:"", height:80, ports: [ "layout()", { id:"svg", label:" " }  ],
+                children: [
+                    { id: "transform()", width:90, type:"JavaScript" },
+                    { id: "Elk.js", type:"Library" },
+                    { id: "diagram()", type:"JavaScript" },
+                    { id: "SVG.js", type:"Library" },
+                ],
+                edges:[
+                    ["HDElk.layout()", "transform()" ],
+                    ["transform()", "Elk.js" ],
+                    ["Elk.js", "diagram()" ],
+                    ["diagram()", "SVG.js" ],
+                    ["SVG.js", "HDElk.svg" ],
+                ]
+            },
+            { id: "webpage", highlight:4, type:"HTML", ports: [ "div" ] }
+        ],
+        edges: [ ["diagram","HDElk.layout()"], ["HDElk.svg","webpage.div"] ]
+    }
+
+    hdelk.layout( HDElk_graph, "HDElk_diagram" );
+</script>
+
+``` js
+const HDElk_graph = {
+    id: "HDElk FLOW",
+    children: [
+        { id: "diagram", highlight:2, type:"JSON" },
+        { id: "HDElk", highlight:1, label:"", height:80, ports: [ "layout()", { id:"svg", label:" " }  ],
+            children: [
+                { id: "transform()", width:90, type:"JavaScript" },
+                { id: "Elk.js", type:"Library" },
+                { id: "diagram()", type:"JavaScript" },
+                { id: "SVG.js", type:"Library" },
+            ],
+            edges:[
+                ["HDElk.layout()", "transform()" ],
+                ["transform()", "Elk.js" ],
+                ["Elk.js", "diagram()" ],
+                ["diagram()", "SVG.js" ],
+                ["SVG.js", "HDElk.svg" ],
+            ]
+        },
+        { id: "webpage", highlight:4, type:"HTML", ports: [ "div" ] }
+    ],
+    edges: [ ["diagram","HDElk.layout()"], ["HDElk.svg","webpage.div"] ]
+}
+```
+
+Finally, here's the diagram that appears as the banner on this site, illustrating different background colors and highlighting.
 
 <script>
     var title_graph = {
@@ -999,11 +1028,11 @@ Finally, here's the diagram that appears as the banner on this site, illustratin
             ["in","one.in"],
             {route:["one.out","two.in"]},
             {route:["two.out","three.in"]},
-            {route:["three.out","four.in"], bus:0 },
-            {route:["four.out","five.in"], bus:0 },
-            {route:["five.out","six.in"], bus:0 },
-            {route:["six.out","seven.in"], bus:0 },
-            {route:["seven.out","out"], bus:0 }
+            {route:["three.out","four.in"] },
+            {route:["four.out","five.in"] },
+            {route:["five.out","six.in"] },
+            {route:["six.out","seven.in"] },
+            {route:["seven.out","out"] }
         ]
     }
 
@@ -1050,11 +1079,11 @@ var title_graph = {
         ["in","one.in"],
         {route:["one.out","two.in"]},
         {route:["two.out","three.in"]},
-        {route:["three.out","four.in"], bus:0 },
-        {route:["four.out","five.in"], bus:0 },
-        {route:["five.out","six.in"], bus:0 },
-        {route:["six.out","seven.in"], bus:0 },
-        {route:["seven.out","out"], bus:0 }
+        {route:["three.out","four.in"] },
+        {route:["four.out","five.in"] },
+        {route:["five.out","six.in"] },
+        {route:["six.out","seven.in"] },
+        {route:["seven.out","out"] }
     ]
 }
 ```
