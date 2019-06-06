@@ -2,9 +2,7 @@
 layout: single
 ---
 
-Created the HDElkJS repo
-
-**Thanks to for the Site Tools**
+Created the HDElk repo
 
 GitHub
 

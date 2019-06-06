@@ -45,7 +45,8 @@ var hdelk = (function(){
      * @param {string} divname
      */
     var layout = function( graph, divname  ) {
-        const elk = new ELK()
+        const elk = new ELK({
+          })
 
         transformNode( graph );
 
