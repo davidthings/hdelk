@@ -22,7 +22,7 @@ Then next there will be a `<script>` tag containing the diagram description and 
 
 Finally there will be a `<div>`, suitably identified to receive the SVG.
 
-See [Installation](/installation) for more information
+See [Installation]({{site.baseurl}}/installation) for more information
 
 ## Basic Diagram
 
@@ -1057,11 +1057,3 @@ var title_graph = {
     ]
 }
 ```
-
-## Preprocessed
-
-<div id="diagram_preprocessed"></div>
-
-## Elk Input
-
-<div id="diagram_elk"></div>

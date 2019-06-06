@@ -52,7 +52,7 @@ Insert the following into an HTML file.
 
 Browse to it.
 
-See the [example.html](/example.html) which is about as bare bones as it can be.
+See the [example.html]({{site.baseurl}}/example.html) which is about as bare bones as it can be.
 
 
 

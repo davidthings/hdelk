@@ -1,5 +1,5 @@
 ---
-layout: home
+layout: splash
 permalink : /
 header:
   overlay_image: /assets/images/banner.svg
@@ -10,20 +10,20 @@ HDElk is a web-based HDL diagramming tool.  It was designed to permit the easy v
 
 What follows is an overview of the project, but if you're eager to get in to the details, here are the quick links.
 
-- [Installation](/installation/)
-- [Tutorial](/tutorial/)
+- [Installation]({{site.baseurl}}/installation/)
+- [Tutorial]({{site.baseurl}}/tutorial/)
 
 ## Motivation
 
 There are many many diagramming solutions, so why HDElk?  Mostly because the other solutions use an online editor and to varying degrees are WYSIWYG. This means it is sometimes hard to control the look and feel of a diagram, and it can also be quite hard to maintain (for example, change the name of something, change the size of all nodes, etc.).  The great project [WaveDrom](https://wavedrom.com/) shows the way: let the user describe the diagram in JSON, then just render it.  What does WaveDrom do?
 
-![](/assets/images/wavedrom.png)
+![]({{site.baseurl}}/assets/images/wavedrom.png)
 
 Here you can see the JSON describing the waveform and the resulting output.  This is very convenient, it can be modified easily, customized and so on.
 
 Back to rendering HDL, it should be noted that a much more sophisticated tool than HDElk exists, called [netlistsvg](https://github.com/nturley/netlistsvg).  This tool takes actual output from the incredible open source synthesizer, [Yosys](https://github.com/cliffordwolf/yosys) and renders the actual logic.
 
-![](/assets/images/netlistsvg.svg)
+![]({{site.baseurl}}/assets/images/netlistsvg.svg)
 
 This is an SVG sample from the home page.  Clearly if you want real diagrams generated from actual code, NetListSVG is the project to look into.  NetListSVG uses [Elk.JS](https://github.com/OpenKieler/elkjs) for its layout, and was an inspiration for the present project.
 
@@ -91,9 +91,9 @@ While this is very far from Verilog or VHDL, you can see that the structure is s
 For completeness, somewhere the following library files need to be loaded
 
 ```js
-<script src="/assets/js/elk.bundled.js"></script>
-<script src="/assets/js/svg.js"></script>
-<script src="/assets/js/hdelk.js"></script>
+<script src="/js/elk.bundled.js"></script>
+<script src="/js/svg.js"></script>
+<script src="/js/hdelk.js"></script>
 ```
 
 ## How it Works
