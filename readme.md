@@ -5,6 +5,8 @@
 
 HDElk is a web-based HDL diagramming tool. It was designed to permit the easy visual representation of Verilog or VHDL (generically HDL’s, Hardware Description Languages) in web pages by creation of simple javascript specification objects.
 
+The HDElk [website](https://davidthings.github.io/hdelk/) has an Overview, Installation Instructions and a Tutorial
+
 ## Simple Example
 
 Here's a simple diagram
