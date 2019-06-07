@@ -1,6 +1,9 @@
 ---
-layout: splash
+layout: single
 permalink : /tutorial
+toc: true
+toc_label: Contents
+toc_sticky: true
 header:
   title: Tutorial
   overlay_image: /assets/images/banner.svg
@@ -39,7 +42,7 @@ The most simple thing to create is the empty node
     hdelk.layout( graph, "basic_diagram" );
 </script>
 
-Here's the code that created it.
+Nice, right?  Here's the code that created it.
 
 ```html
 <div id="basic_diagram"></div>

@@ -1,6 +1,9 @@
 ---
-layout: splash
+layout: single
 permalink : /
+toc: true
+toc_label: Contents
+toc_sticky: true
 header:
   overlay_image: /assets/images/banner.svg
 ---

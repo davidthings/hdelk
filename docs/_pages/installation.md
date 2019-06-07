@@ -1,5 +1,5 @@
 ---
-layout: splash
+layout: single
 permalink : /installation
 header:
   title: Installation
