@@ -14,9 +14,9 @@
   -webkit-animation-delay: 0.15s;
   animation-delay: 0.15s;
 
-  @include breakpoint($x-large) {
-    max-width: $max-width;
-  }
+  // @include breakpoint($x-large) {
+  //   max-width: $max-width;
+  // }
 }
 
 .page {
@@ -27,8 +27,11 @@
   }
 
   @include breakpoint($x-large) {
-    width: calc(100% - #{$right-sidebar-width});
-    padding-right: $right-sidebar-width;
+    // width: calc(100% - #{$right-sidebar-width});
+    // padding-right: $right-sidebar-width;
+    float: right;
+    width: calc(100% - #{$right-sidebar-width-narrow});
+    padding-right: $right-sidebar-width-narrow;
   }
 
   .page__inner-wrap {
@@ -154,9 +157,9 @@
       padding-left: 1em;
       padding-right: 1em;
 
-      @include breakpoint($x-large) {
-        max-width: $x-large;
-      }
+      // @include breakpoint($x-large) {
+      //   max-width: $x-large;
+      // }
     }
 
     .page__title,
@@ -478,7 +481,9 @@
   }
 
   @include breakpoint($x-large) {
-    width: calc(100% - #{$right-sidebar-width});
+//    width: calc(100% - #{$right-sidebar-width});
+    float: right;
+    width: calc(100% - #{$right-sidebar-width-narrow});
   }
 
   a {

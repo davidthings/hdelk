@@ -18,9 +18,9 @@
   -webkit-animation-delay: 0.3s;
   animation-delay: 0.3s;
 
-  @include breakpoint($x-large) {
-    max-width: $x-large;
-  }
+  // @include breakpoint($x-large) {
+  //   max-width: $x-large;
+  // }
 
   ol {
     padding: 0;
@@ -33,7 +33,11 @@
     }
 
     @include breakpoint($x-large) {
-      width: calc(100% - #{$right-sidebar-width});
+      float: right;
+      width: calc(100% - #{$right-sidebar-width-narrow});
+    //   float: right;
+    //   //width: calc(100% - #{$right-sidebar-width});
+    //   width: calc(100% - #{$right-sidebar-width-narrow});
     }
   }
 

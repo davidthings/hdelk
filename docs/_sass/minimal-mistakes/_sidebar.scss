@@ -36,9 +36,9 @@
     }
   }
 
-  @include breakpoint($x-large) {
-    width: calc(#{$right-sidebar-width} - 1em);
-  }
+  // @include breakpoint($x-large) {
+  //   width: calc(#{$right-sidebar-width} - 1em);
+  // }
 
   > * {
     margin-top: 1em;
@@ -63,7 +63,7 @@
 
   img {
     width: 100%;
-    
+
     &.emoji {
       width: 20px;
       height: 20px;
@@ -93,8 +93,10 @@
   }
 
   @include breakpoint($x-large) {
-    width: $right-sidebar-width;
-    margin-right: -1 * $right-sidebar-width;
+    width: $right-sidebar-width-narrow;
+    margin-right: -1 * $right-sidebar-width-narrow;
+    //width: $right-sidebar-width;
+    //margin-right: -1 * $right-sidebar-width;
   }
 }
 
@@ -106,6 +108,8 @@
   }
 
   @include breakpoint($x-large) {
+    position: relative;
+    float: right;
     margin-right: 0;
   }
 }

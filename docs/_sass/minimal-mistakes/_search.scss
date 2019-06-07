@@ -47,9 +47,9 @@
     -webkit-animation-delay: 0.15s;
     animation-delay: 0.15s;
 
-    @include breakpoint($x-large) {
-      max-width: $max-width;
-    }
+    // @include breakpoint($x-large) {
+    //   max-width: $max-width;
+    // }
   }
 
   .search-input {
@@ -67,7 +67,8 @@
     }
 
     @include breakpoint($x-large) {
-      font-size: $type-size-1;
+      // font-size: $type-size-1;
+      font-size: $type-size-2;
     }
   }
 
@@ -94,7 +95,8 @@
     }
 
     @include breakpoint($x-large) {
-      width: 50%;
+      width: 75%;
+      // width: 50%;
     }
   }
 
