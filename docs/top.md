@@ -16,8 +16,8 @@ One area that uses interconnected nodes is FPGA programming in Hardware Descript
 
 What follows is an overview of the project, but if you're eager to get in to the details, here are the quick links.
 
-- [Installation]({{site.baseurl}}/installation/)
-- [Tutorial]({{site.baseurl}}/tutorial/)
+- [Installation]({{site.baseurl}}/installation)
+- [Tutorial]({{site.baseurl}}/tutorial)
 
 ## Motivation
 
