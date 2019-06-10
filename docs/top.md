@@ -232,12 +232,20 @@ The two main functions that do HDElk work are `transform()` and `diagram()` both
 
 ## Future Work
 
-There are a number of areas that could use improvement
+Enhancements
 
+- **Add a live editor** Create a live editor for experimentation
+- **Push Error Messages Into the Div** When there is a problem, make sure error messages are visible
+- **Allow bus shorthand in Edge Spec** If there is an integer after the sources and targets let that be the `bus` value
 - **Create a Style system** There is only one "style", any others are the "find the place in the code and change it" kind
 - **Add instructions for use with NodeJS** So far this is a browser focused effort.
+- **Add more highlight colors** Orange and Purple!
+
+Bugs
+
 - **Elk Node Label Bug** There seems to be a bug when labels are not centered.  The space allowed is made twice as big as it should be.  Leaf nodes in HDElk have centered labels so this is OK, but parent nodes do reserve too label space since the labels are H_CENTER, V_TOP
 - **Elk Self Connection Label Bug** Labels on edges connecting two ports on the same node do not appear.
 - **Enable Low Level Drawing** Since all the code is right there, it would be easy to call into it to create manual diagrams - i.e. without Elk.  This could be helpful when trying to do something different.
+- **Look into why Elk pulls sw.js fairly regularly** Does this only happen locally?
 
 Please feel free to create Issues and Pull Requests.

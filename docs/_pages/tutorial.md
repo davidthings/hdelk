@@ -1077,7 +1077,10 @@ This first monster is especially interesting because of its use of a complex int
                     { id: "c1", highlight:5, type:"compA", inPorts: ["Data", "Valid", "Ready"], outPorts:[{id:"p1",label:"Loop"},"p2","p3"] },
                     { id: "c2", highlight:3, type:"compB", ports: ["p1","p2","p3"] },
                     { id: "c3", highlight:4, type:"compC", ports: ["p1","p2","p3","p4"] },
-                    { id: "c4", highlight:2, type:"compD", ports: ["p1","p2"] }
+                    { id: "c4", highlight:2, type:"Bigger Module",
+                        parameters:["Prop1","Prop2", "Prop3", "Prop4"],
+                        inPorts: ["clock","reset","p1","X","Y","Z"],
+                        outPorts:["p2","P","Q","R"] }
                 ],
                 edges: [
                     { sources:["c1.p2"], targets:["c2.p1"], bus:1, highlight:5 },
