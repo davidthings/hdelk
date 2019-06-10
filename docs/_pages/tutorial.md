@@ -21,56 +21,22 @@ Three javascript files must be included for HDElk to work.  Somewhere on your HT
 <script src="js/hdelk.js"></script>
 ```
 
-Then next there will be a `<script>` tag containing the diagram description and the call into HDElk which will make it appear as an SVG if all goes well.
+Next, and for every diagram there will be a `<div>`, uniquely identified.
 
-Finally there will be a `<div>`, suitably identified to receive the SVG.
+Finally there will be a `<script>` tag containing the diagram description and the call into HDElk which will make it appear as an SVG if all goes well.
+
 
 See [Installation]({{site.baseurl}}/installation) for more information
 
-## Basic Diagram
+## A Node
 
-The most simple thing to create is the empty node
-
-<div id="basic_diagram"></div>
-
-<script type="text/javascript">
-
-    var graph = {
-        id:""
-    }
-
-    hdelk.layout( graph, "basic_diagram" );
-</script>
-
-Nice, right?  Here's the code that created it.
-
-```html
-<div id="basic_diagram"></div>
-
-<script type="text/javascript">
-
-    var graph = {
-        id: ""
-    }
-
-    hdelk.layout( graph, "basic_diagram" );
-</script>
-```
-
-The `<script>` tag holds the description of the diagram and the call to HDElk to render it.  The `<div>` tag shows where the diagram is going to be placed.
-
-Leaving the `id` out results in an error - every node needs an Id.
-
-## Adding a Node
-
-How do we add nodes to the diagram?
+What is the most simple thing we can draw?
 
 <div id="adding_a_node"></div>
 
 <script type="text/javascript">
 
     var graph = {
-        id:"",
         children:[
             { id:"C1" }
         ]
@@ -79,20 +45,28 @@ How do we add nodes to the diagram?
     hdelk.layout( graph, "adding_a_node" );
 </script>
 
-Here's the code that created it (just the Javascript object this time)
+One node!  Here's the code that created it
 
 ```js
-var graph = {
-    id:"",
-    children:[
-        { id:"C1" }
-    ]
-}
+<div id="adding_a_node"></div>
+
+<script type="text/javascript">
+
+    var graph = {
+        children:[
+            { id:"C1" }
+        ]
+    }
+
+    hdelk.layout( graph, "adding_a_node" );
+</script>
 ```
 
-Sub nodes can be added to any node.  They are described in an array `children`.  And then there is recursion!  Each child is exactly the format of the first.
+The `<script>` tag holds the description of the diagram and the call to HDElk to render it.  The `<div>` tag shows where the diagram is going to be placed.
 
-Note that any label the parent node has may be obscured by children and other objects.  This is the subject of a Future Work item.
+Leaving the `id` out results in an error - every node needs an Id.
+
+Sub nodes can be added to any node.  They are described in an array `children`.  And then there is recursion!  Each child is exactly the format of the first.
 
 ## Adding Ports
 
@@ -103,7 +77,6 @@ Nodes connect to each other with Edges and can optionally connect via Ports
 <script type="text/javascript">
 
     var graph = {
-        id:"",
         children:[
             { id:"C1", ports:[ "In", "Out" ] }
         ]
@@ -112,18 +85,71 @@ Nodes connect to each other with Edges and can optionally connect via Ports
     hdelk.layout( graph, "adding_ports" );
 </script>
 
-Here's the code
+Here's the code, (just the Javascript object this time, a `<script>` tag and `<div>` are required for each unique diagram)
 
 ```js
 var graph = {
-    id:"",
     children:[
         { id:"C1", ports:[ "In", "Out" ] }
     ]
 }
 ```
 
-Ports get added to the left of the Node they are owned by.  When they are connected they may move around.
+Ports added this way get added to the left of the Node they are owned by.  When they are connected they may move around.
+
+Ports may also be added to a particular side:
+
+<div id="adding_sided_ports"></div>
+
+<script type="text/javascript">
+
+    var graph = {
+        children:[
+            { id:"C1", inPorts:[ "In" ], outPorts:[ "Out" ] }
+        ]
+    }
+
+    hdelk.layout( graph, "adding_sided_ports" );
+</script>
+
+```js
+var graph = {
+    children:[
+        { id:"C1", inPorts:[ "In" ],outPorts:[ "Out" ] }
+    ]
+}
+```
+In code this is done just by adding to inPorts or outPorts.  Ports added to `inPorts` or `outPorts` will stay on their correct side.
+
+Use the `inPorts` and `outPorts` whenever the layout engine needs a bit of a nudge to get it right.
+
+## Adding Parameters
+
+Nodes may get a different kind of port, called a `parameter`.
+
+<div id="adding_parameters"></div>
+
+<script type="text/javascript">
+
+    var graph = {
+        children:[
+            { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] }
+        ]
+    }
+
+    hdelk.layout( graph, "adding_parameters" );
+</script>
+
+Parameters are just ports that appear on the top side of the node.
+
+```js
+var graph = {
+    children:[
+        { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] }
+    ]
+}
+```
+
 
 ## Adding more Nodes and Ports
 
@@ -134,10 +160,9 @@ What about more nodes?
 <script type="text/javascript">
 
     var graph = {
-        id:"",
         children:[
-            { id:"C1", ports:[ "In", "Out" ] },
-            { id:"C2", ports:[ "In", { id:"O", label:"Output" } ] },
+            { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
+            { id:"C2", inPorts:[ "In" ], outPorts:[ { id:"O", label:"Output" } ]  },
             { id:"C3" }
         ]
     }
@@ -151,10 +176,9 @@ Here's the code
 
 ```js
 var graph = {
-    id:"",
     children:[
-        { id:"C1", ports:[ "In", "Out" ] },
-        { id:"C2", ports:[ "In", { id:"O", label:"Output" } ] },
+        { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
+        { id:"C2", inPorts:[ "In" ], outPorts:[ { id:"O", label:"Output" } ] },
         { id:"C3" }
     ]
 }
@@ -163,7 +187,7 @@ Note here for `Output` a longer form of Port description is used - an object ins
 
 Each child in the `Children` structure is formed identically and should have a unique name.  Watch for correct comma use.  Leaving them off is easy to do and causes parsing errors!
 
-The layout engine organizes the new components into a simple grid.  Until they are connected together, this is all it can do.
+The layout engine organizes the new components into a simple grid taking into account the sizes of everything.
 
 ## Connecting Nodes and Ports together
 
@@ -174,10 +198,9 @@ Connecting nodes together is pretty easy
 <script type="text/javascript">
 
     var graph = {
-        id:"",
         children:[
-            { id:"C1", ports:[ "In", "Out" ] },
-            { id:"C2", ports:[ "In", "Output" ] },
+            { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
+            { id:"C2", inPorts:[ "In" ], outPorts:[ "Out" ] },
             { id:"C3" }
         ],
         edges:[
@@ -192,10 +215,9 @@ Things move around a little as the appropriate ports are connected.  To help wit
 
 ```js
 var graph = {
-    id:"",
     children:[
-        { id:"C1", ports:[ "In", "Out" ] },
-        { id:"C2", ports:[ "In", "Out" ] },
+        { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
+        { id:"C2", inPorts:[ "In" ], outPorts:[ "Out" ]  },
         { id:"C3" }
     ],
     edges:[
@@ -213,15 +235,14 @@ As edges are specified, additional constraints are made by the layout engine on 
 <script type="text/javascript">
 
     var graph = {
-        id:"",
         children:[
-            { id:"C1", ports:[ "In", "Out" ] },
-            { id:"C2", ports:[ "In", "Output" ] },
+            { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
+            { id:"C2", inPorts:[ "In" ], outPorts:[ "Out" ] },
             { id:"C3" }
         ],
         edges:[
             ["C1.Out","C2.In"],
-            ["C2.Output","C3"]
+            ["C2.Out","C3"]
         ]
     }
 
@@ -234,15 +255,14 @@ Here's the code
 
 ```js
 var graph = {
-    id:"",
     children:[
-        { id:"C1", ports:[ "In", "Out" ] },
-        { id:"C2", ports:[ "In", "Output" ] },
+        { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
+        { id:"C2", inPorts:[ "In" ], outPorts:[ "Out" ] },
         { id:"C3" }
     ],
     edges:[
         ["C1.Out","C2.In"],
-        ["C2.Output","C3"]
+        ["C2.Out","C3"]
     ]
 }
 ```
@@ -258,20 +278,19 @@ Adding child nodes is easy - in fact we've already done it.  Each child can have
 <script type="text/javascript">
 
     var graph = {
-        id:"",
         children:[
-            { id:"C1", ports:[ "In", "Out" ] },
-            { id:"C2", ports:[ "In", "Output" ],
+            { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
+            { id:"C2", inPorts:[ "In" ], outPorts:[ "Out" ],
                 children:[
-                    { id:"GC1", ports:[ "In", "Out" ] },
-                    { id:"GC2", ports:[ "In", "Out" ] }
+                    { id:"GC1", inPorts:[ "In" ], outPorts:[ "Out" ] },
+                    { id:"GC2", inPorts:[ "In" ], outPorts:[ "Out" ] }
                 ]
             },
             { id:"C3" }
         ],
         edges:[
             ["C1.Out","C2.In"],
-            ["C2.Output","C3"]
+            ["C2.Out","C3"]
         ]
     }
 
@@ -282,20 +301,19 @@ The layout engine just lays the new nodes out, expanding ancestor nodes where ne
 
 ```js
 var graph = {
-    id:"",
     children:[
-        { id:"C1", ports:[ "In", "Out" ] },
+        { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
         { id:"C2", ports:[ "In", "Output" ],
             children:[
-                { id:"GC1", ports:[ "In", "Out" ] },
-                { id:"GC2", ports:[ "In", "Out" ] }
+                { id:"GC1", inPorts:[ "In" ], outPorts:[ "Out" ] },
+                { id:"GC2", inPorts:[ "In" ], outPorts:[ "Out" ] }
             ]
         },
         { id:"C3" }
     ],
     edges:[
         ["C1.Out","C2.In"],
-        ["C2.Output","C3"]
+        ["C2.Out","C3"]
     ]
 }
 ```
@@ -307,25 +325,24 @@ Let's do a little more connecting.
 <script type="text/javascript">
 
     var graph = {
-        id:"",
         children:[
-            { id:"C1", ports:[ "In", "Out" ] },
-            { id:"C2", ports:[ "In", "Output" ],
+            { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
+            { id:"C2", inPorts:[ "In" ], outPorts:[ "Out" ],
                 children:[
-                    { id:"GC1", ports:[ "In", "Out" ] },
-                    { id:"GC2", ports:[ "In", "Out" ] }
+                    { id:"GC1", inPorts:[ "In" ], outPorts:[ "Out" ] },
+                    { id:"GC2", inPorts:[ "In" ], outPorts:[ "Out" ] }
                 ],
                 edges:[
                     ["C2.In", "GC1.In"],
                     ["GC1.Out", "GC2.In"],
-                    ["GC2.Out", "C2.Output"],
+                    ["GC2.Out", "C2.Out"],
                 ]
             },
             { id:"C3" }
         ],
         edges:[
             ["C1.Out","C2.In"],
-            ["C2.Output","C3"]
+            ["C2.Out","C3"]
         ]
     }
 
@@ -336,25 +353,24 @@ More connections modify the layout, but everything is kept in order.
 
 ```js
 var graph = {
-    id:"",
     children:[
-        { id:"C1", ports:[ "In", "Out" ] },
-        { id:"C2", ports:[ "In", "Output" ],
+        { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
+        { id:"C2",  inPorts:[ "In" ], outPorts:[ "Out" ],
             children:[
-                { id:"GC1", ports:[ "In", "Out" ] },
-                { id:"GC2", ports:[ "In", "Out" ] }
+                { id:"GC1", inPorts:[ "In" ], outPorts:[ "Out" ] },
+                { id:"GC2", inPorts:[ "In" ], outPorts:[ "Out" ] }
             ],
             edges:[
                 ["C2.In", "GC1.In"],
                 ["GC1.Out", "GC2.In"],
-                ["GC2.Out", "C2.Output"],
+                ["GC2.Out", "C2.Out"],
             ]
         },
         { id:"C3" }
     ],
     edges:[
         ["C1.Out","C2.In"],
-        ["C2.Output","C3"]
+        ["C2.Out","C3"]
     ]
 }
 ```
@@ -368,11 +384,10 @@ Sometimes, especially on the outermost node, it is helpful to have internal port
 <script type="text/javascript">
 
     var graph = {
-        id:"",
         children:[
             { id:"ExtIn", port:1 },
-            { id:"C1", ports:[ "In", "Out" ] },
-            { id:"C2", ports:[ "In", "Output" ],
+            { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
+            { id:"C2",  inPorts:[ "In" ], outPorts:[ "Out" ],
                 children:[
                     { id:"GC1", ports:[ "In", "Out" ] },
                     { id:"GC2", ports:[ "In", "Out" ] }
@@ -380,7 +395,7 @@ Sometimes, especially on the outermost node, it is helpful to have internal port
                 edges:[
                     ["C2.In", "GC1.In"],
                     ["GC1.Out", "GC2.In"],
-                    ["GC2.Out", "C2.Output"],
+                    ["GC2.Out", "C2.Out"],
                 ]
             },
             { id:"C3" },
@@ -388,7 +403,7 @@ Sometimes, especially on the outermost node, it is helpful to have internal port
         ],
         edges:[
             ["C1.Out","C2.In"],
-            ["C2.Output","C3"]
+            ["C2.Out","C3"]
         ]
     }
 
@@ -399,10 +414,10 @@ Until they are connected they just fit in where they can.
 
 ```js
 var graph = {
-    id:"",
     children:[
-        { id:"C1", ports:[ "In", "Out" ] },
-        { id:"C2", ports:[ "In", "Output" ],
+        { id:"ExtIn", port:1 },
+        { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
+        { id:"C2", inPorts:[ "In" ], outPorts:[ "Out" ],
             children:[
                 { id:"GC1", ports:[ "In", "Out" ] },
                 { id:"GC2", ports:[ "In", "Out" ] }
@@ -410,14 +425,15 @@ var graph = {
             edges:[
                 ["C2.In", "GC1.In"],
                 ["GC1.Out", "GC2.In"],
-                ["GC2.Out", "C2.Output"],
+                ["GC2.Out", "C2.Out"],
             ]
         },
-        { id:"C3" }
+        { id:"C3" },
+        { id:"ExtOut", port:1 },
     ],
     edges:[
         ["C1.Out","C2.In"],
-        ["C2.Output","C3"]
+        ["C2.Out","C3"]
     ]
 }
 ```
@@ -431,11 +447,10 @@ Let's connect them up.
 <script type="text/javascript">
 
     var graph = {
-        id:"",
         children:[
             { id:"ExtIn", port:1 },
-            { id:"C1", ports:[ "In", "Out" ] },
-            { id:"C2", ports:[ "In", "Output" ],
+            { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
+            { id:"C2", inPorts:[ "In" ], outPorts:[ "Out" ],
                 children:[
                     { id:"GC1", ports:[ "In", "Out" ] },
                     { id:"GC2", ports:[ "In", "Out" ] }
@@ -443,7 +458,7 @@ Let's connect them up.
                 edges:[
                     ["C2.In", "GC1.In"],
                     ["GC1.Out", "GC2.In"],
-                    ["GC2.Out", "C2.Output"],
+                    ["GC2.Out", "C2.Out"],
                 ]
             },
             { id:"C3" },
@@ -452,7 +467,7 @@ Let's connect them up.
         edges:[
             ["ExtIn","C1.In"],
             ["C1.Out","C2.In"],
-            ["C2.Output","C3"],
+            ["C2.Out","C3"],
             ["C3","ExtOut"],
         ]
     }
@@ -464,11 +479,10 @@ Everthing falls nicely into place.
 
 ```js
     var graph = {
-        id:"",
         children:[
             { id:"ExtIn", port:1 },
-            { id:"C1", ports:[ "In", "Out" ] },
-            { id:"C2", ports:[ "In", "Output" ],
+            { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
+            { id:"C2", ports:[ inPorts:[ "In" ], outPorts:[ "Out" ],
                 children:[
                     { id:"GC1", ports:[ "In", "Out" ] },
                     { id:"GC2", ports:[ "In", "Out" ] }
@@ -476,7 +490,7 @@ Everthing falls nicely into place.
                 edges:[
                     ["C2.In", "GC1.In"],
                     ["GC1.Out", "GC2.In"],
-                    ["GC2.Out", "C2.Output"],
+                    ["GC2.Out", "C2.Out"],
                 ]
             },
             { id:"C3" },
@@ -485,11 +499,137 @@ Everthing falls nicely into place.
         edges:[
             ["ExtIn","C1.In"],
             ["C1.Out","C2.In"],
-            ["C2.Output","C3"],
+            ["C2.Out","C3"],
             ["C3","ExtOut"],
         ]
     }
 ```
+
+## Constants
+
+Occasionally, it is important to show constants.
+
+<div id="add_constant"></div>
+
+<script type="text/javascript">
+
+    var graph = {
+        children:[
+            { id:"5", constant:1 },
+            { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
+            { id:"C2",  inPorts:[ "In" ], outPorts:[ "Out" ],
+                children:[
+                    { id:"GC1", ports:[ "In", "Out" ] },
+                    { id:"GC2", ports:[ "In", "Out" ] }
+                ],
+                edges:[
+                    ["C2.In", "GC1.In"],
+                    ["GC1.Out", "GC2.In"],
+                    ["GC2.Out", "C2.Out"],
+                ]
+            },
+            { id:"C3" }
+        ],
+        edges:[
+            ["C1.Out","C2.In"],
+            ["C2.Out","C3"]
+        ]
+    }
+
+    hdelk.layout( graph, "add_constant" );
+</script>
+
+Until they are connected they just fit in where they can.
+
+```js
+var graph = {
+    children:[
+        { id:"ExtIn", port:1 },
+        { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
+        { id:"C2", inPorts:[ "In" ], outPorts:[ "Out" ],
+            children:[
+                { id:"GC1", ports:[ "In", "Out" ] },
+                { id:"GC2", ports:[ "In", "Out" ] }
+            ],
+            edges:[
+                ["C2.In", "GC1.In"],
+                ["GC1.Out", "GC2.In"],
+                ["GC2.Out", "C2.Out"],
+            ]
+        },
+        { id:"C3" },
+        { id:"ExtOut", port:1 },
+    ],
+    edges:[
+        ["C1.Out","C2.In"],
+        ["C2.Out","C3"]
+    ]
+}
+```
+
+They are defined just like internal nodes, except they are marked `constant:1`.  Constants may also have their own ports which may be useful when dealing with parts of constants.
+
+Let's connect them up.
+
+<div id="connecting_constants"></div>
+
+<script type="text/javascript">
+
+    var graph = {
+        children:[
+            { id:"5", constant:1 },
+            { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
+            { id:"C2", inPorts:[ "In" ], outPorts:[ "Out" ],
+                children:[
+                    { id:"GC1", ports:[ "In", "Out" ] },
+                    { id:"GC2", ports:[ "In", "Out" ] }
+                ],
+                edges:[
+                    ["C2.In", "GC1.In"],
+                    ["GC1.Out", "GC2.In"],
+                    ["GC2.Out", "C2.Out"],
+                ]
+            },
+            { id:"C3" }
+        ],
+        edges:[
+            ["5","C1.Size"],
+            ["C1.Out","C2.In"],
+            ["C2.Out","C3"]
+        ]
+    }
+
+    hdelk.layout( graph, "connecting_constants" );
+</script>
+
+`C1`'s parameter `size` is now clearly set to `5`.
+
+```js
+    var graph = {
+        children:[
+            { id:"ExtIn", port:1 },
+            { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
+            { id:"C2", ports:[ inPorts:[ "In" ], outPorts:[ "Out" ],
+                children:[
+                    { id:"GC1", ports:[ "In", "Out" ] },
+                    { id:"GC2", ports:[ "In", "Out" ] }
+                ],
+                edges:[
+                    ["C2.In", "GC1.In"],
+                    ["GC1.Out", "GC2.In"],
+                    ["GC2.Out", "C2.Out"],
+                ]
+            },
+            { id:"C3" },
+            { id:"ExtOut", port:1 },
+        ],
+        edges:[
+            ["C1.Out","C2.In"],
+            ["C2.Out","C3"],
+        ]
+    }
+```
+
 
 ## Highlighting
 
@@ -502,16 +642,15 @@ The easiest thing to do is to just specify a color.
 <script type="text/javascript">
 
     var graph = {
-        id:"",
         color:"#EEE",
         children:[
-            { id:"C1", ports:[ "In", "Out" ] },
-            { id:"C2", ports:[ "In", "Output" ] },
+            { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
+            { id:"C2", ports:[ "In", "Out" ] },
             { id:"C3" }
         ],
         edges:[
             ["C1.Out","C2.In"],
-            ["C2.Output","C3"]
+            ["C2.Out","C3"]
         ]
     }
 
@@ -522,16 +661,15 @@ This can be very useful to create contrasts and backgrounds.
 
 ```js
 var graph = {
-    id:"",
     color:"#EEE",
     children:[
-        { id:"C1", ports:[ "In", "Out" ] },
-        { id:"C2", ports:[ "In", "Output" ] },
+        { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
+        { id:"C2", ports:[ "In", "Out" ] },
         { id:"C3" }
     ],
     edges:[
         ["C1.Out","C2.In"],
-        ["C2.Output","C3"]
+        ["C2.Out","C3"]
     ]
 }
 ```
@@ -545,16 +683,15 @@ Another way to highlight nodes is with the highlight flag.
 <script type="text/javascript">
 
     var graph = {
-        id:"",
         color:"#EEE",
         children:[
-            { id:"C1", ports:[ "In", "Out" ] },
-            { id:"C2", highlight:1, ports:[ "In", "Output" ] },
+            { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
+            { id:"C2", highlight:1, ports:[ "In", "Out" ] },
             { id:"C3" }
         ],
         edges:[
             ["C1.Out","C2.In"],
-            ["C2.Output","C3"]
+            ["C2.Out","C3"]
         ]
     }
 
@@ -565,36 +702,35 @@ The highlight flag alters the appearance of a node or edge, changing colors, lin
 
 ```js
 var graph = {
-    id:"",
     color:"#EEE",
     children:[
-        { id:"C1", ports:[ "In", "Out" ] },
-        { id:"C2", highlight:1, ports:[ "In", "Output" ] },
+        { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
+        { id:"C2", highlight:1, ports:[ "In", "Out" ] },
         { id:"C3" }
     ],
     edges:[
         ["C1.Out","C2.In"],
-        ["C2.Output","C3"]
+        ["C2.Out","C3"]
     ]
 }
 ```
-See the `higlight` member is assigned a number > 0.  Setting different highlight numbers causes different highlight schemes to be used.  There are currently 5.
+
+See the `highlight` member is assigned a number.  Setting different highlight numbers causes different highlight schemes to be used.  There are currently 6.
 
 <div id="add_more_highlighting"></div>
 
 <script type="text/javascript">
 
     var graph = {
-        id:"",
         color:"#EEE",
         children:[
-            { id:"C1", highlight:2, ports:[ "In", "Out" ] },
-            { id:"C2", highlight:1, ports:[ "In", "Output" ] },
+            { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ], highlight:2 },
+            { id:"C2", highlight:1, ports:[ "In", "Out" ] },
             { id:"C3", highlight:3,  }
         ],
         edges:[
             ["C1.Out","C2.In"],
-            ["C2.Output","C3"]
+            ["C2.Out","C3"]
         ]
     }
 
@@ -605,20 +741,60 @@ The highlight flag alters the appearance of a node or edge, changing colors, lin
 
 ```js
 var graph = {
-    id:"",
     color:"#EEE",
     children:[
         { id:"C1", highlight:2, ports:[ "In", "Out" ] },
-        { id:"C2", highlight:1, ports:[ "In", "Output" ] },
+        { id:"C2", highlight:1, ports:[ "In", "Out" ] },
         { id:"C3", highlight:3,  }
     ],
     edges:[
         ["C1.Out","C2.In"],
-        ["C2.Output","C3"]
+        ["C2.Out","C3"]
     ]
 }
 ```
+
 See the `highlight` member is assigned a number > 0.  Setting different highlight numbers causes different highlight schemes to be used.  There are currently 5.
+
+There is another feature tucked away in there.  Setting `highlight` to `0` causes the item to be dimmed.  This can be useful when drawing attention to a particular node.
+
+<div id="add_dim"></div>
+
+<script type="text/javascript">
+
+    var graph = {
+        color:"#EEE",
+        children:[
+            { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ], highlight:0 },
+            { id:"C2", ports:[ "In", "Out" ] },
+            { id:"C3", highlight:0,  }
+        ],
+        edges:[
+            ["C1.Out","C2.In"],
+            ["C2.Out","C3"]
+        ]
+    }
+
+    hdelk.layout( graph, "add_dim" );
+</script>
+
+As with the other highlights, the dim value effects everything about the item's appearance.
+
+```js
+var graph = {
+    color:"#EEE",
+    children:[
+        { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ], highlight:0 },
+        { id:"C2", ports:[ "In", "Out" ] },
+        { id:"C3", highlight:0,  }
+    ],
+    edges:[
+        ["C1.Out","C2.In"],
+        ["C2.Out","C3"]
+    ]
+}
+```
+See the `highlight` member is assigned 0.
 
 ## Edge Properties
 
@@ -639,16 +815,15 @@ which is not very friendly toward new properties.  Therefore you can also specif
 <script type="text/javascript">
 
     var graph = {
-        id:"",
         color:"#EEE",
         children:[
             { id:"C1", highlight:2, ports:[ "In", "Out" ] },
-            { id:"C2", highlight:1, ports:[ "In", "Output" ] },
+            { id:"C2", highlight:1, ports:[ "In", "Out" ] },
             { id:"C3", highlight:3,  }
         ],
         edges:[
             { route:["C1.Out","C2.In"], bus:1 },
-            ["C2.Output","C3"]
+            ["C2.Out","C3"]
         ]
     }
 
@@ -659,16 +834,15 @@ There is now a larger line connecting `C1` and `C2`.
 
 ```js
 var graph = {
-    id:"",
     color:"#EEE",
     children:[
         { id:"C1", highlight:2, ports:[ "In", "Out" ] },
-        { id:"C2", highlight:1, ports:[ "In", "Output" ] },
+        { id:"C2", highlight:1, ports:[ "In", "Out" ] },
         { id:"C3", highlight:3,  }
     ],
     edges:[
         { route:["C1.Out","C2.In"], bus:1 },
-        ["C2.Output","C3"]
+        ["C2.Out","C3"]
     ]
 }
 ```
@@ -682,16 +856,15 @@ With the expanded edge format, we can also highlight connections.
 <script type="text/javascript">
 
     var graph = {
-        id:"",
         color:"#EEE",
         children:[
             { id:"C1", highlight:2, ports:[ "In", "Out" ] },
-            { id:"C2", highlight:1, ports:[ "In", "Output" ] },
+            { id:"C2", highlight:1, ports:[ "In", "Out" ] },
             { id:"C3", highlight:3,  }
         ],
         edges:[
             { route:["C1.Out","C2.In"], bus:1, highlight:2 },
-            ["C2.Output","C3"]
+            ["C2.Out","C3"]
         ]
     }
 
@@ -702,19 +875,61 @@ The same principle applies to highlights here.  Use a small integer to get the c
 
 ```js
 var graph = {
-    id:"",
     color:"#EEE",
     children:[
         { id:"C1", highlight:2, ports:[ "In", "Out" ] },
-        { id:"C2", highlight:1, ports:[ "In", "Output" ] },
+        { id:"C2", highlight:1, ports:[ "In", "Out" ] },
         { id:"C3", highlight:3,  }
     ],
     edges:[
         { route:["C1.Out","C2.In"], bus:1, highlight:2 },
-        ["C2.Output","C3"]
+        ["C2.Out","C3"]
     ]
 }
 ```
+
+## Edge Labels
+
+It is very handy to be able to label edges as well as nodes and ports.  The magic of the Elk layout engine is that we get that for free.
+
+<div id="edge_labels"></div>
+
+<script type="text/javascript">
+
+    var graph = {
+        color:"#EEE",
+        children:[
+            { id:"C1", highlight:2, ports:[ "In", "Out" ] },
+            { id:"C2", highlight:1, ports:[ "In", "Out" ] },
+            { id:"C3", highlight:3,  }
+        ],
+        edges:[
+            { route:["C1.Out","C2.In"], label:"Path1", bus:1, highlight:2 },
+            ["C2.Out","C3", "Path2"]
+        ]
+    }
+
+    hdelk.layout( graph, "edge_labels" );
+</script>
+
+
+```js
+var graph = {
+    color:"#EEE",
+    children:[
+        { id:"C1", highlight:2, ports:[ "In", "Out" ] },
+        { id:"C2", highlight:1, ports:[ "In", "Out" ] },
+        { id:"C3", highlight:3,  }
+    ],
+    edges:[
+        { route:["C1.Out","C2.In"], label:"Path1", bus:1, highlight:2 },
+        ["C2.Out","C3", "Path2"]
+    ]
+}
+```
+
+Note that we add a `label` member to the expanded edge spec, or just add another string to the compact form.
+
 
 ## Node Type
 
@@ -725,16 +940,15 @@ A name sometimes isn't enough information on a node, so there is a mechanism to 
 <script type="text/javascript">
 
     var graph = {
-        id:"",
         color:"#EEE",
         children:[
             { id:"C1", type:"TypeA", ports:[ "In", "Out" ] },
-            { id:"C2", type:"TypeB", ports:[ "In", "Output" ] },
+            { id:"C2", type:"TypeB", ports:[ "In", "Out" ] },
             { id:"C3", type:"TypeC",   }
         ],
         edges:[
-            { route:["C1.Out","C2.In"], bus:1 },
-            ["C2.Output","C3"]
+            { route:["C1.Out","C2.In"], label:"Path1", bus:1 },
+            ["C2.Out","C3", "Path2"]
         ]
     }
 
@@ -745,16 +959,15 @@ The type is drawn in a smaller font size with a less emphatic color.
 
 ```js
 var graph = {
-    id:"",
     color:"#EEE",
     children:[
         { id:"C1", type:"TypeA", ports:[ "In", "Out" ] },
-        { id:"C2", type:"TypeB", ports:[ "In", "Output" ] },
+        { id:"C2", type:"TypeB", ports:[ "In", "Out" ] },
         { id:"C3", type:"TypeC",   }
     ],
     edges:[
-        { route:["C1.Out","C2.In"], bus:1 },
-        ["C2.Output","C3"]
+        { route:["C1.Out","C2.In"], label:"Path1", bus:1 },
+        ["C2.Out","C3", "Path2"]
     ]
 }
 ```
@@ -765,7 +978,7 @@ Since there is no elaborate build or deployment system in HDElk, tweaking the co
 
 The simplest way to adjust the appearance of a diagram is to alter the appearance variables.  It is easy to make a mess, so do it gradually.
 
-Here's the list from hdelk.js
+Here's a sample list from hdelk.js
 
 ```js
     /**
@@ -821,24 +1034,25 @@ Here are three final diagrams, illustrating all of the above JSON specification 
 
 This first monster is especially interesting because of its use of a complex internal port and also a variety of different edge and port specification styles.
 
+<div id="diagram"></div>
+
 <script>
     var dg = {
-        id: "main",
         color:"#F7F7F7",
         children: [
             { id: "input", port:1 },
             { id: "node_one", ports: ["in", {id:"p1",label:"Loop"},"p2"] },
             { id: "n2", label: "n_2", type:"output", ports: ["p1", "p2", {id:"p3",label:"Long Label"},"p4"] },
-            { id: "n3", type:"pipe",  ports: ["p1","p2", "p3"] },
-            { id: "n4", type:"pipeA", ports: ["p1","p2"]  },
-            { id: "n5", type:"pipeB", ports: ["p1","p2","p3"]  },
-            { id: "n6", type:"pipeC", ports: ["p1","p2","p3","p4"]  },
+            { id: "n3", type:"pipe",  ports: ["p1","p2", "p3"], parameters:[ "Param1", "Param2", "Param3"] },
+            { id: "n4", type:"pipeA", highlight:0, ports: ["p1","p2"]  },
+            { id: "n5", type:"pipeB", highlight:0, ports: ["p1","p2","p3"]  },
+            { id: "n6", type:"pipeC", highlight:0, ports: ["p1","p2","p3","p4"]  },
             { id: "n7",
                 highlight:1,
-                ports: ["p1","p2","pIn"],
+                inPorts: ["p1", "pIn"], outPorts:["p2"],
                 children: [
-                    { id: "pIn", highlight:1, label:"", port:1, ports: ["pIn", "Valid","Ready"] },
-                    { id: "c1", highlight:5, type:"compA", ports: ["Valid", "Ready", {id:"p1",label:"Loop"},"p2","p3"] },
+                    { id: "pIn", highlight:1, label:"", port:1, inPorts: ["pIn"], outPorts:["Data","Valid","Ready"] },
+                    { id: "c1", highlight:5, type:"compA", inPorts: ["Data", "Valid", "Ready"], outPorts:[{id:"p1",label:"Loop"},"p2","p3"] },
                     { id: "c2", highlight:3, type:"compB", ports: ["p1","p2","p3"] },
                     { id: "c3", highlight:4, type:"compC", ports: ["p1","p2","p3","p4"] },
                     { id: "c4", highlight:2, type:"compD", ports: ["p1","p2"] }
@@ -847,57 +1061,58 @@ This first monster is especially interesting because of its use of a complex int
                     { sources:["c1.p2"], targets:["c2.p1"], bus:1, highlight:5 },
                     { source:"n7.p1", target:"c1.p1" },
                     { route:[ "c2.p2", "c4.p1" ], bus:1, highlight:3 },
-                    { route:[ "c4.p2", "n7.p2" ], bus:1, highlight:2 },
-                    { route:["c1.p3","c3.p3"], highlight:5  },
+                    { route:[ "c4.p2", "n7.p2" ], bus:1, highlight:2, label:"result" },
+                    { route:["c1.p3","c3.p3"], highlight:5, label:"to yellow"  },
                     { route:[ "c3.p4", "c2.p3" ], bus:1, highlight:4 },
                     { route:[ "c3.p1", "c3.p2"], highlight:4 },
-                    [ "pIn.Valid", "c1.Valid"],
-                    [ "pIn.Ready", "c1.Ready"],
-                    [ "n7.pIn", "pIn.pIn", 1]
+                    [ "pIn.Valid", "c1.Valid", "valid" ],
+                    [ "pIn.Data", "c1.Data", "data" ],
+                    //[ "pIn.Ready", "c1.Ready", "ready" ],
+                    [ "c1.Ready", "pIn.Ready", "ready" ],
+                    [ "n7.pIn", "pIn.pIn", "pIn"  ]
                 ]
             }
         ],
         edges: [
             ["input","node_one.in"],
-            {source:"node_one.p1", target:"n2.p1", bus:1 },
+            {source:"node_one.p1", target:"n2.p1", bus:1, label:"long bus" },
             {source:"node_one.p2", target:"n3.p1" },
-            ["n3.p2", "n4.p1" ],
-            ["n4.p2", "n5.p1" ],
-            {source:"n5.p2", target:"n6.p1" },
-            {source:"n5.p3", target:"n6.p3", bus:1 },
-            {route:["n6.p2", "n2.p2" ]},
-            {route:["n6.p4", "n2.p4" ], bus:1},
+            {route:["n3.p2", "n4.p1"], highlight:0, label:"optional" },
+            {route:["n4.p2", "n5.p1"], highlight:0 },
+            {route:["n5.p2", "n6.p1"], highlight:0 },
+            {route:["n5.p3", "n6.p3"], bus:1, highlight:0 },
+            {route:["n6.p2", "n2.p2" ], highlight:0 },
+            {route:["n6.p4", "n2.p4" ], bus:1, highlight:0},
             ["n3.p2", "n7.p1" ],
-            ["n7.p2", "n2.p3", 1 ],
-            ["n3.p3", "n7.pIn", 1 ]
+            ["n7.p2", "n2.p3" ],
+            ["n3.p3", "n7.pIn" ]
         ]
     }
 
     hdelk.layout( dg, "diagram" );
 </script>
 
-Note the `n7` child `pIn`, which is a port and which has sub-ports itself.
+Note the `n7` internal port `pIn`, which has its own sub-ports.
 
-<div id="diagram"></div>
+Note also that the label on the edge that connects a port on `c3` back to itself is not working.  This is a bug with Elk.
 
 ``` js
     var dg = {
-        id: "main",
         color:"#F7F7F7",
         children: [
             { id: "input", port:1 },
             { id: "node_one", ports: ["in", {id:"p1",label:"Loop"},"p2"] },
             { id: "n2", label: "n_2", type:"output", ports: ["p1", "p2", {id:"p3",label:"Long Label"},"p4"] },
-            { id: "n3", type:"pipe",  ports: ["p1","p2", "p3"] },
-            { id: "n4", type:"pipeA", ports: ["p1","p2"]  },
-            { id: "n5", type:"pipeB", ports: ["p1","p2","p3"]  },
-            { id: "n6", type:"pipeC", ports: ["p1","p2","p3","p4"]  },
+            { id: "n3", type:"pipe",  ports: ["p1","p2", "p3"], parameters:[ "Param1", "Param2", "Param3"] },
+            { id: "n4", type:"pipeA", highlight:0, ports: ["p1","p2"]  },
+            { id: "n5", type:"pipeB", highlight:0, ports: ["p1","p2","p3"]  },
+            { id: "n6", type:"pipeC", highlight:0, ports: ["p1","p2","p3","p4"]  },
             { id: "n7",
                 highlight:1,
-                ports: ["p1","p2","pIn"],
+                inPorts: ["p1", "pIn"], outPorts:["p2"],
                 children: [
-                    { id: "pIn", highlight:1, label:"", port:1, ports: ["pIn", "Valid","Ready"] },
-                    { id: "c1", highlight:5, type:"compA", ports: ["Valid", "Ready", {id:"p1",label:"Loop"},"p2","p3"] },
+                    { id: "pIn", highlight:1, label:"", port:1, inPorts: ["pIn"], outPorts:["Data","Valid","Ready"] },
+                    { id: "c1", highlight:5, type:"compA", inPorts: ["Data", "Valid", "Ready"], outPorts:[{id:"p1",label:"Loop"},"p2","p3"] },
                     { id: "c2", highlight:3, type:"compB", ports: ["p1","p2","p3"] },
                     { id: "c3", highlight:4, type:"compC", ports: ["p1","p2","p3","p4"] },
                     { id: "c4", highlight:2, type:"compD", ports: ["p1","p2"] }
@@ -906,31 +1121,35 @@ Note the `n7` child `pIn`, which is a port and which has sub-ports itself.
                     { sources:["c1.p2"], targets:["c2.p1"], bus:1, highlight:5 },
                     { source:"n7.p1", target:"c1.p1" },
                     { route:[ "c2.p2", "c4.p1" ], bus:1, highlight:3 },
-                    { route:[ "c4.p2", "n7.p2" ], bus:1, highlight:2 },
-                    { route:["c1.p3","c3.p3"], highlight:5  },
+                    { route:[ "c4.p2", "n7.p2" ], bus:1, highlight:2, label:"result" },
+                    { route:["c1.p3","c3.p3"], highlight:5, label:"to yellow"  },
                     { route:[ "c3.p4", "c2.p3" ], bus:1, highlight:4 },
                     { route:[ "c3.p1", "c3.p2"], highlight:4 },
-                    [ "pIn.Valid", "c1.Valid"],
-                    [ "pIn.Ready", "c1.Ready"],
-                    [ "n7.pIn", "pIn.pIn", 1]
+                    [ "pIn.Valid", "c1.Valid", "valid" ],
+                    [ "pIn.Data", "c1.Data", "data" ],
+                    //[ "pIn.Ready", "c1.Ready", "ready" ],
+                    [ "c1.Ready", "pIn.Ready", "ready" ],
+                    [ "n7.pIn", "pIn.pIn", "pIn"  ]
                 ]
             }
         ],
         edges: [
             ["input","node_one.in"],
-            {source:"node_one.p1", target:"n2.p1", bus:1 },
+            {source:"node_one.p1", target:"n2.p1", bus:1, label:"long bus" },
             {source:"node_one.p2", target:"n3.p1" },
-            ["n3.p2", "n4.p1" ],
-            ["n4.p2", "n5.p1" ],
-            {source:"n5.p2", target:"n6.p1" },
-            {source:"n5.p3", target:"n6.p3", bus:1 },
-            {route:["n6.p2", "n2.p2" ]},
-            {route:["n6.p4", "n2.p4" ], bus:1},
+            {route:["n3.p2", "n4.p1"], highlight:0, label:"optional" },
+            {route:["n4.p2", "n5.p1"], highlight:0 },
+            {route:["n5.p2", "n6.p1"], highlight:0 },
+            {route:["n5.p3", "n6.p3"], bus:1, highlight:0 },
+            {route:["n6.p2", "n2.p2" ], highlight:0 },
+            {route:["n6.p4", "n2.p4" ], bus:1, highlight:0},
             ["n3.p2", "n7.p1" ],
-            ["n7.p2", "n2.p3", 1 ],
-            ["n3.p3", "n7.pIn", 1 ]
+            ["n7.p2", "n2.p3" ],
+            ["n3.p3", "n7.pIn" ]
         ]
     }
+
+    hdelk.layout( dg, "diagram" );
 ```
 
 The `main` and `n7` nodes also have just about every different kind of edge specification.
@@ -942,10 +1161,9 @@ The "How it Works" diagram shows non-HDL use of HDElk.  One could argue that it 
 <script type="text/javascript">
 
     const HDElk_graph = {
-        id: "HDElk FLOW",
         children: [
             { id: "diagram", highlight:2, type:"JSON" },
-            { id: "HDElk", highlight:1, label:"", height:80, ports: [ "layout()", { id:"svg", label:" " }  ],
+            { id: "HDElk", highlight:1, label:"", height:80, inPorts: [ "layout()" ], outPorts:[ { id:"svg", label:" " }  ],
                 children: [
                     { id: "transform()", width:90, type:"JavaScript" },
                     { id: "Elk.js", type:"Library" },
@@ -970,7 +1188,6 @@ The "How it Works" diagram shows non-HDL use of HDElk.  One could argue that it 
 
 ``` js
 const HDElk_graph = {
-    id: "HDElk FLOW",
     children: [
         { id: "diagram", highlight:2, type:"JSON" },
         { id: "HDElk", highlight:1, label:"", height:80, ports: [ "layout()", { id:"svg", label:" " }  ],
@@ -996,18 +1213,18 @@ const HDElk_graph = {
 
 Finally, here's the diagram that appears as the banner on this site, illustrating different background colors and highlighting.
 
+<div id="title_diagram"></div>
+
 <script>
     var title_graph = {
-        id: "",
         color: "#555",
         children: [
             { id: "in", port: 1, highlight:1 },
             { id: "one", color: "#999", ports: ["in", "out"] },
             { id: "two", color: "#999", ports: ["in", "out"] },
             { id: "three", color: "#999", ports: ["in", "out"] },
-            { id: "four", ports: ["in", "out"],
+            { id: "four", label:"", inPorts:["in"], outPorts:["out"],
               color: "#666",
-              ports: ["in", "out"],
               children:[
                 {id:"Child1", highlight:2, ports:["in", "outA", "outB"]},
                 {id:"Child2A", highlight:3, ports:["in", "out"]},
@@ -1044,12 +1261,9 @@ Finally, here's the diagram that appears as the banner on this site, illustratin
 
 </script>
 
-<div id="title_diagram"></div>
-
 
 ``` js
 var title_graph = {
-    id: "",
     color: "#555",
     children: [
         { id: "in", port: 1, highlight:1 },

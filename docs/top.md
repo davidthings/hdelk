@@ -195,10 +195,10 @@ Roughly what happens when you submit a graph to HDElk is shown below:
 <script type="text/javascript">
 
     const hdelk_graph = {
-        id: "HDElk Flow",
+        id: "HDElk Flow", label:"",
         children: [
             { id: "diagram", highlight:2, type:"JSON" },
-            { id: "HDElk", highlight:1, label:"", height:80, ports: [ "layout()", {id:"svg",label:" "}  ],
+            { id: "HDElk", highlight:1, label:"", height:80, inPorts:[ "layout()" ], outPorts:[{id:"svg",label:" "}  ],
                 children: [
                     { id: "transform()", width:90, type:"JavaScript" },
                     { id: "Elk.js", type:"Library" },
@@ -234,12 +234,7 @@ The two main functions that do HDElk work are `transform()` and `diagram()` both
 
 There are a number of areas that could use improvement
 
-- **Fix Node Label Handling** Node label handling is clumsy.  It is easy to get a node that is too narrow to accomodate the title, and labels can get covered up
-- **Fix Node Layout**  Layout can sometimes be not as pretty as might be hoped for.
-- **Control Port Ordering** Ports sometimes have a conventional order.  How can order be asserted?
-- **Explore Layout Options** The [many many options](https://www.eclipse.org/elk/reference/options.html) ElkJS provides are completely unused.  Luckily, the defaults are pretty good, but surely we can do better.
 - **Create a Style system** There is only one "style", any others are the "find the place in the code and change it" kind
-- **Make Proper Use of Labels** Labels are a first class Elk object, but they're not really used here.
 - **Add instructions for use with NodeJS** So far this is a browser focused effort.
 
 Please feel free to create Issues and Pull Requests.

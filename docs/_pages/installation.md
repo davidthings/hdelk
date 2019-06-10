@@ -21,6 +21,8 @@ Put them in a **js** folder as appropriate
 Insert the following into an HTML file.
 
 ```js
+<div id="simple_diagram"></div>
+
 <script src="/js/elk.bundled.js"></script>
 <script src="/js/svg.min.js"></script>
 <script src="/js/hdelk.js"></script>
@@ -47,7 +49,6 @@ Insert the following into an HTML file.
     hdelk.layout( simple_graph, "simple_diagram" );
 </script>
 
-<div id="simple_diagram"></div>
 ```
 
 Browse to it.
