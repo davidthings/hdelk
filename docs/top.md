@@ -235,6 +235,7 @@ The two main functions that do HDElk work are `transform()` and `diagram()` both
 Enhancements
 
 - **Add a live editor** Create a live editor for experimentation
+- **Add a gallery** Create page with a few examples
 - **Push Error Messages Into the Div** When there is a problem, make sure error messages are visible
 - **Allow bus shorthand in Edge Spec** If there is an integer after the sources and targets let that be the `bus` value
 - **Create a Style system** There is only one "style", any others are the "find the place in the code and change it" kind
