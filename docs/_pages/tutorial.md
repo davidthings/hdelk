@@ -183,7 +183,21 @@ var graph = {
     ]
 }
 ```
-Note here for `Output` a longer form of Port description is used - an object instead of a string.  This is required when ports need more properties than the simple id.  Here the `id` is something simple, and the label that appears is different.
+Note that we can create a `label` member if we ever want to override the Id.  Here the label `Output`, a longer form of the port name, is used.
+
+The simple string form of port, is expanded into an object.
+
+```js
+{ ... outPorts:[ "Out" ] ... }
+```
+
+becomes
+
+```js
+{ ... outPorts:[ { id:"O", label:"Output" } ] ... }
+```
+
+Now internally the port can be refered to as "O" while the larger "Output" is the thing users will see.
 
 Each child in the `Children` structure is formed identically and should have a unique name.  Watch for correct comma use.  Leaving them off is easy to do and causes parsing errors!
 
@@ -249,7 +263,7 @@ As edges are specified, additional constraints are made by the layout engine on 
     hdelk.layout( graph, "connecting_more_nodes" );
 </script>
 
-Note also there is no requirement that all edges connect to ports.  They can connect to the node itself.
+Note also that there is no requirement that edges connect to ports.  They can connect directly to the node itself.
 
 Here's the code
 
@@ -266,6 +280,14 @@ var graph = {
     ]
 }
 ```
+
+For example, in the block above, the fragment
+
+```js
+   ["C2.Out","C3"]
+```
+
+Just says connect `C2.Out` to anywhere on `C3`
 
 Extra edges are just extra sub-arrays in the edges array.  Watch for correct comma use here too.
 
@@ -410,7 +432,7 @@ Sometimes, especially on the outermost node, it is helpful to have internal port
     hdelk.layout( graph, "internal_ports" );
 </script>
 
-Until they are connected they just fit in where they can.
+Here we've added `ExtIn` and `ExtOut`.  Until they are connected they just fit in where they can.
 
 ```js
 var graph = {
@@ -438,7 +460,7 @@ var graph = {
 }
 ```
 
-They are defined just like children nodes, except to help with rendering, they are marked as a port as you might expect `port:1`.  These internal ports may also have their own ports which is useful when illustrating the packing and unpacking of complex connections.
+Internal Ports are defined just like children nodes, except to help with rendering, they are marked with an identifying member - `port:1`.  These internal ports may also have their own ports which is useful when illustrating the packing and unpacking of complex connections.
 
 Let's connect them up.
 
@@ -475,7 +497,7 @@ Let's connect them up.
     hdelk.layout( graph, "connecting_internal_ports" );
 </script>
 
-Everthing falls nicely into place.
+Everthing falls nicely into place.  Everyone should take a moment to reflect on how great this is.  Layout is very hard.
 
 ```js
     var graph = {
@@ -624,6 +646,7 @@ Let's connect them up.
             { id:"ExtOut", port:1 },
         ],
         edges:[
+            ["5","C1.Size"],
             ["C1.Out","C2.In"],
             ["C2.Out","C3"],
         ]
@@ -635,7 +658,7 @@ Let's connect them up.
 
 Often it's handy to be able to emphasize or highlight parts of a diagram.  Returning to one of our simpler diagrams above, let's see how highlighting looks.
 
-The easiest thing to do is to just specify a color.
+The easiest thing to do is to just specify a background color.
 
 <div id="add_highlighting_color"></div>
 
@@ -657,7 +680,7 @@ The easiest thing to do is to just specify a color.
     hdelk.layout( graph, "add_highlighting_color" );
 </script>
 
-This can be very useful to create contrasts and backgrounds.
+The backround is now a light gray.  This can be very useful to create contrasts.
 
 ```js
 var graph = {
@@ -676,7 +699,7 @@ var graph = {
 
 The `color` member can be set on any node, but be careful with color choices.  It's easy to make child nodes, edges and labels disappear with the wrong colors.  Just use HTML / CSS style colors as the parameter.
 
-Another way to highlight nodes is with the highlight flag.
+More conveniently, and more interestingly, another way to highlight nodes is with the highlight flag.
 
 <div id="add_highlighting"></div>
 
@@ -754,8 +777,6 @@ var graph = {
 }
 ```
 
-See the `highlight` member is assigned a number > 0.  Setting different highlight numbers causes different highlight schemes to be used.  There are currently 5.
-
 There is another feature tucked away in there.  Setting `highlight` to `0` causes the item to be dimmed.  This can be useful when drawing attention to a particular node.
 
 <div id="add_dim"></div>
@@ -794,7 +815,6 @@ var graph = {
     ]
 }
 ```
-See the `highlight` member is assigned 0.
 
 ## Edge Properties
 
@@ -871,7 +891,7 @@ With the expanded edge format, we can also highlight connections.
     hdelk.layout( graph, "edge_highlights" );
 </script>
 
-The same principle applies to highlights here.  Use a small integer to get the color you want.
+The same principle applies to highlights here.  Use a small integer to get the color you want.  Use `0` to dim the edge.
 
 ```js
 var graph = {
@@ -974,11 +994,13 @@ var graph = {
 
 ## Modifying the Look and Feel
 
+That's pretty much it for HDElk features.
+
 Since there is no elaborate build or deployment system in HDElk, tweaking the code to get something you want is feasible.  Changes can be seen immediately.  Code can be debugged.
 
 The simplest way to adjust the appearance of a diagram is to alter the appearance variables.  It is easy to make a mess, so do it gradually.
 
-Here's a sample list from hdelk.js
+Here's a sample of some of the variables from hdelk.js
 
 ```js
     /**

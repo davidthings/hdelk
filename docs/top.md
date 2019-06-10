@@ -236,5 +236,8 @@ There are a number of areas that could use improvement
 
 - **Create a Style system** There is only one "style", any others are the "find the place in the code and change it" kind
 - **Add instructions for use with NodeJS** So far this is a browser focused effort.
+- **Elk Node Label Bug** There seems to be a bug when labels are not centered.  The space allowed is made twice as big as it should be.  Leaf nodes in HDElk have centered labels so this is OK, but parent nodes do reserve too label space since the labels are H_CENTER, V_TOP
+- **Elk Self Connection Label Bug** Labels on edges connecting two ports on the same node do not appear.
+- **Enable Low Level Drawing** Since all the code is right there, it would be easy to call into it to create manual diagrams - i.e. without Elk.  This could be helpful when trying to do something different.
 
 Please feel free to create Issues and Pull Requests.
