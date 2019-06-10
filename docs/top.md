@@ -100,11 +100,11 @@ We'll cover this much more in the [Tutorial]({{site.baseurl}}/tutorial) but for 
 
 - `edges` is an array of connections between child nodes, where each edge describes its start and end point, whether it's a bus or not and whether it is highlighted.
 
-For completeness, somewhere the following library files need to be loaded
+For completeness, somewhere the following library files need to be loaded.  They are available from the repo [here](https://github.com/davidthings/hdelk)
 
 ```js
 <script src="/js/elk.bundled.js"></script>
-<script src="/js/svg.js"></script>
+<script src="/js/svg.min.js"></script>
 <script src="/js/hdelk.js"></script>
 ```
 
