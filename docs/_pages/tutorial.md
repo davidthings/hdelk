@@ -526,7 +526,7 @@ Let's connect them up.
     hdelk.layout( graph, "connecting_internal_ports" );
 </script>
 
-Everthing falls nicely into place.  Everyone should take a moment to reflect on how great this is.  Layout is very hard.
+Everthing falls nicely into place.  Everyone should take a moment to reflect on how great this is.  Thankyou ElkJS.  Layout is very hard.
 
 ```js
     var graph = {
