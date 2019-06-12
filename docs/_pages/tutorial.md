@@ -97,9 +97,9 @@ var graph = {
 
 Ports added this way get added to the left of the Node they are owned by.  When they are connected they may move around.
 
-Ports may also be added to a particular side:
+Ports may be declared as inPorts or outPorts:
 
-<div id="adding_sided_ports"></div>
+<div id="adding_io_ports"></div>
 
 <script type="text/javascript">
 
@@ -109,7 +109,7 @@ Ports may also be added to a particular side:
         ]
     }
 
-    hdelk.layout( graph, "adding_sided_ports" );
+    hdelk.layout( graph, "adding_io_ports" );
 </script>
 
 ```js
@@ -119,9 +119,38 @@ var graph = {
     ]
 }
 ```
-In code this is done just by adding to inPorts or outPorts.  Ports added to `inPorts` or `outPorts` will stay on their correct side.
+In code this is done just by adding the label to the inPorts or outPorts arrays.  Ports added to `inPorts` or `outPorts` will stay on their correct side.
 
 Use the `inPorts` and `outPorts` whenever the layout engine needs a bit of a nudge to get it right.
+
+For even more control, ports may also be added to a particular side:
+
+<div id="adding_sided_ports"></div>
+
+<script type="text/javascript">
+
+    var graph = {
+        children:[
+            { id:"C1", label:"", northPorts:[ "north1", "north2" ], southPorts:[ "south1", "south2" ], 
+                                        eastPorts:[ "east1", "east2" ], westPorts:[ "west1", "west2" ] }
+        ]
+    }
+
+    hdelk.layout( graph, "adding_sided_ports" );
+</script>
+
+Ports are added, with the North and South ports being rendered vertically.
+
+```js
+var graph = {
+    children:[
+        { id:"C1", label:"", northPorts:[ "north1", "north2" ], southPorts:[ "south1", "south2" ], 
+                             eastPorts:[ "east1", "east2" ], westPorts:[ "west1", "west2" ] }
+    ]
+}
+```
+
+Port location is specified by adding the port to the correct list (eg. `northPorts`)
 
 ## Adding Parameters
 
@@ -818,13 +847,15 @@ var graph = {
 
 ## Edge Properties
 
-Edges can be marked as being complex by adding the property `bus:1` to the edge specification.  But there is a problem.  We've been using the super compact edge spec.
+All our edges so far have been simple one wire connections.  Since mutliwire connections are very common, it is sometimes handy to be able to distinguish them.  This can be done in one of two ways - either by adding a 1 to the simple edge spec, or by adding the property `bus:1` to a new object form of edge specification.  
+
+We've been using the super compact edge spec.  Adding the bus flag is trivial:
 
 ``` js
-["source","target"]
+["source","target", 1]
 ```
 
-which is not very friendly toward new properties.  Therefore you can also specify edges in a longer form which is better suited to adding attributes.
+The longer form retains the routing array (the source and the target), but being an object, is well suited to adding new attributes.  We just add the member `bus` and set it to `1`.
 
 ``` js
 { route:["source","target"], bus:1 }
@@ -843,14 +874,14 @@ which is not very friendly toward new properties.  Therefore you can also specif
         ],
         edges:[
             { route:["C1.Out","C2.In"], bus:1 },
-            ["C2.Out","C3"]
+            ["C2.Out","C3", 1]
         ]
     }
 
     hdelk.layout( graph, "edge_properties" );
 </script>
 
-There is now a larger line connecting `C1` and `C2`.
+There are now buses connecting `C1` and `C2`.
 
 ```js
 var graph = {
@@ -862,7 +893,7 @@ var graph = {
     ],
     edges:[
         { route:["C1.Out","C2.In"], bus:1 },
-        ["C2.Out","C3"]
+        ["C2.Out","C3",1]
     ]
 }
 ```
@@ -884,14 +915,14 @@ With the expanded edge format, we can also highlight connections.
         ],
         edges:[
             { route:["C1.Out","C2.In"], bus:1, highlight:2 },
-            ["C2.Out","C3"]
+            ["C2.Out","C3", 1]
         ]
     }
 
     hdelk.layout( graph, "edge_highlights" );
 </script>
 
-The same principle applies to highlights here.  Use a small integer to get the color you want.  Use `0` to dim the edge.
+The same principle applies to highlights here.  Use a small integer to get the color you want.  Use `0` to dim the edge.  There is no facility to add highlights to the compact form.
 
 ```js
 var graph = {
@@ -903,7 +934,7 @@ var graph = {
     ],
     edges:[
         { route:["C1.Out","C2.In"], bus:1, highlight:2 },
-        ["C2.Out","C3"]
+        ["C2.Out","C3",1]
     ]
 }
 ```
@@ -925,7 +956,7 @@ It is very handy to be able to label edges as well as nodes and ports.  The magi
         ],
         edges:[
             { route:["C1.Out","C2.In"], label:"Path1", bus:1, highlight:2 },
-            ["C2.Out","C3", "Path2"]
+            ["C2.Out","C3", "Path2", 1]
         ]
     }
 
@@ -943,7 +974,7 @@ var graph = {
     ],
     edges:[
         { route:["C1.Out","C2.In"], label:"Path1", bus:1, highlight:2 },
-        ["C2.Out","C3", "Path2"]
+        ["C2.Out","C3", "Path2", 1]
     ]
 }
 ```
@@ -968,7 +999,7 @@ A name sometimes isn't enough information on a node, so there is a mechanism to 
         ],
         edges:[
             { route:["C1.Out","C2.In"], label:"Path1", bus:1 },
-            ["C2.Out","C3", "Path2"]
+            ["C2.Out","C3", "Path2", 1]
         ]
     }
 
@@ -987,7 +1018,7 @@ var graph = {
     ],
     edges:[
         { route:["C1.Out","C2.In"], label:"Path1", bus:1 },
-        ["C2.Out","C3", "Path2"]
+        ["C2.Out","C3", "Path2", 1]
     ]
 }
 ```
@@ -1079,8 +1110,9 @@ This first monster is especially interesting because of its use of a complex int
                     { id: "c3", highlight:4, type:"compC", ports: ["p1","p2","p3","p4"] },
                     { id: "c4", highlight:2, type:"Bigger Module",
                         parameters:["Prop1","Prop2", "Prop3", "Prop4"],
-                        inPorts: ["clock","reset","p1","X","Y","Z"],
-                        outPorts:["p2","P","Q","R"] }
+                        westPorts: ["clock","reset","p1","X","Y","Z"],
+                        eastPorts:["p2","P","Q","R"],
+                        southPorts:["A","B","C"] }
                 ],
                 edges: [
                     { sources:["c1.p2"], targets:["c2.p1"], bus:1, highlight:5 },

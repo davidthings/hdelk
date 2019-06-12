@@ -216,6 +216,74 @@ var hdelk = (function(){
              } );
         }
 
+        var westPorts = child.westPorts;
+        if ( westPorts ) {
+            westPorts.forEach( function( item, index ){
+                if ( typeof( item ) == "string" ) {
+                    var newItem = { id:item };
+                    item = newItem;
+                }
+                ports.unshift( item );
+                if ( !item.layoutOptions )
+                    item.layoutOptions = {};
+
+                if ( !item.layoutOptions[ 'elk.port.side' ] )
+                    item.layoutOptions[ 'elk.port.side' ] = 'WEST'
+             } );
+        }
+
+        var eastPorts = child.eastPorts;
+        if ( eastPorts ) {
+            eastPorts.forEach( function( item, index ){
+                if ( typeof( item ) == "string" ) {
+                    var newItem = { id:item };
+                    item = newItem;
+                }
+                ports.push( item );
+                if ( !item.layoutOptions )
+                    item.layoutOptions = {};
+
+                if ( !item.layoutOptions[ 'elk.port.side' ] )
+                    item.layoutOptions[ 'elk.port.side' ] = 'EAST'
+             } );
+        }
+
+        var northPorts = child.northPorts;
+        if ( northPorts ) {
+            northPorts.forEach( function( item, index ){
+                if ( typeof( item ) == "string" ) {
+                    var newItem = { id:item };
+                    item = newItem;
+                }
+                ports.push( item );
+                if ( !item.layoutOptions )
+                    item.layoutOptions = {};
+
+                item.vertical = 1;
+
+                if ( !item.layoutOptions[ 'elk.port.side' ] )
+                    item.layoutOptions[ 'elk.port.side' ] = 'NORTH'
+             } );
+        }
+
+        var southPorts = child.southPorts;
+        if ( southPorts ) {
+            southPorts.forEach( function( item, index ){
+                if ( typeof( item ) == "string" ) {
+                    var newItem = { id:item };
+                    item = newItem;
+                }
+                ports.push( item );
+                if ( !item.layoutOptions )
+                    item.layoutOptions = {};
+
+                item.vertical = 1;
+
+                if ( !item.layoutOptions[ 'elk.port.side' ] )
+                    item.layoutOptions[ 'elk.port.side' ] = 'SOUTH'
+             } );
+        }
+
         var outPorts = child.outPorts;
         if ( outPorts ) {
             outPorts.forEach( function( item, index ){
@@ -242,6 +310,7 @@ var hdelk = (function(){
                 ports.push( item );
 
                 item.param = 1;
+                item.vertical = 1;
 
                 if ( !item.layoutOptions )
                     item.layoutOptions = {};
@@ -281,7 +350,7 @@ var hdelk = (function(){
                 item.height = port_height;
 
             // swap!
-            if ( item.param ) {
+            if ( item.vertical ) {
                 var t = item.width;
                 item.width = item.height;
                 item.height = t;
@@ -296,8 +365,18 @@ var hdelk = (function(){
                     edges[ index ] = newItem;
                     newItem.sources = [ item[ 0 ] ];
                     newItem.targets = [ item[ 1 ] ];
-                    if ( item[ 2 ] )
-                        newItem.label = item[ 2 ];
+                    if ( item[ 2 ] ) {
+                        if ( typeof( item[2] ) == "string" )    
+                            newItem.label = item[ 2 ];
+                        else
+                            newItem.bus = 1;
+                    }
+                    if ( item[ 3 ] ) {
+                        if ( typeof( item[3] ) == "string" )    
+                            newItem.label = item[ 3 ];
+                        else
+                            newItem.bus = 1;
+                    }
                     item = newItem;
                 }
                 if ( !item.id )
@@ -420,20 +499,42 @@ var hdelk = (function(){
                 else
                     portText = item.id;
 
+                var strokeWidth;
+                var strokeColor;
+                var fillColor;
+                var nameColor;
+
                 if ( item.param ) {
-                    var strokeWidth = child.highlight ? node_highlight_stroke_width : node_stroke_width;
-                    group.rect(item.width, item.height).move(offsetX + child.x+item.x,offsetY + child.y+item.y).attr({ fill:childColor, 'stroke-width': node_stroke_width, stroke:portColor }).stroke({width:strokeWidth});
+                    nameColor = ( child.highlight || child.highlight == 0 ) ? node_highlight_name_text_color[ child.highlight ] : node_name_text_color;
+                    strokeWidth = child.highlight ? node_highlight_stroke_width : node_stroke_width;
+                    strokeColor = portColor;
+                    fillColor = childColor;
+                } else {
+                    nameColor = port_text_color;
+                    strokeWidth = 0;
+                    strokeColor = portColor;
+                    fillColor = portColor;
+                }
 
-                    var nameColor = ( child.highlight || child.highlight == 0 ) ? node_highlight_name_text_color[ child.highlight ] : node_name_text_color;
+                group.rect(item.width, item.height).move(offsetX + child.x+item.x,offsetY + child.y+item.y)
+                                                   .attr({ fill:fillColor, 'stroke-width': strokeWidth, stroke:strokeColor })
+                                                   .stroke({width:strokeWidth});
+                var portTextItem = group.text(portText).style("font-size:"+port_name_font_size).fill({color:nameColor});
+                var portTextWidth = portTextItem.node.getComputedTextLength();
 
-                    var portTextItem = group.text(portText).style("font-size:"+port_name_font_size).fill({color:nameColor});
-                    var portTextWidth = portTextItem.node.getComputedTextLength();
-                        portTextItem.transform( { rotation:90, cx:0, cy:0  } ).move( offsetY + child.y+item.y+(item.height-portTextWidth)/2, -(offsetX + child.x+item.x+item.width-(item.width-port_name_font_size)/2 + 2) );
+                
+                if ( item.vertical ) {
+                    //group.rect(item.width, item.height).move(offsetX + child.x+item.x,offsetY + child.y+item.y)
+                    //                                   .attr({ fill:childColor, 'stroke-width': node_stroke_width, stroke:portColor })
+                    //                                   .stroke({width:strokeWidth});
+                    //var portTextItem = group.text(portText).style("font-size:"+port_name_font_size).fill({color:nameColor});
+                    //var portTextWidth = portTextItem.node.getComputedTextLength();
+                    portTextItem.transform( { rotation:90, cx:0, cy:0  } ).move( offsetY + child.y+item.y+(item.height-portTextWidth)/2, -(offsetX + child.x+item.x+item.width-(item.width-port_name_font_size)/2 + 2) );
                 }
                 else {
-                    group.rect( item.width, item.height ).attr({ fill:portColor }).move(offsetX + child.x+item.x, offsetY + child.y+item.y );
-                    var portTextItem = group.text(portText).style("font-size:"+port_name_font_size).fill({color:port_text_color});
-                    var portTextWidth = portTextItem.node.getComputedTextLength();
+                    //group.rect( item.width, item.height ).attr({ fill:portColor }).move(offsetX + child.x+item.x, offsetY + child.y+item.y );
+                    //var portTextItem = group.text(portText).style("font-size:"+port_name_font_size).fill({color:port_text_color});
+                    //var portTextWidth = portTextItem.node.getComputedTextLength();
                         // draw the background
                     portTextItem.move(offsetX + child.x+item.x+(item.width-portTextWidth)/2, offsetY + child.y+item.y + 2);
                 }

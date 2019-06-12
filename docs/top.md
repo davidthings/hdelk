@@ -21,7 +21,7 @@ What follows is an overview of the project, but if you're eager to get in to the
 
 ## Motivation
 
-There are many many diagramming solutions, so why HDElk?  Mostly because the other solutions use an online editor and to varying degrees are WYSIWYG. This means it is sometimes hard to control the look and feel of a diagram, and it can also be quite hard to maintain (for example, change the name of something, change the size of all nodes, etc.).  The great project [WaveDrom](https://wavedrom.com/) shows the way.  Its job is to draw waveforms, but rather than provide an online WYSIWYG tool, it lets the user describe the diagram in JSON right in the page.  Wavedrom then renders the wave in SVG.
+There are many many diagramming solutions, so why HDElk? WYSIWYG editors are high touch, by design. This means it is sometimes hard to control the look and feel of a diagram, and it can also be quite hard to maintain (for example, change the name of something, change the size of all nodes, etc.).  There are a (number of Javascript diagrammers)[https://modeling-languages.com/javascript-drawing-libraries-diagrams/] but very often they are complex and often don't depict nodes and ports efficiently.  The great project [WaveDrom](https://wavedrom.com/) shows the way.  Its job is to draw waveforms, but rather than provide an online WYSIWYG tool or omnibus draw anything library, it lets the user describe the diagram in a very domain specific JSON right in the page.  Wavedrom then renders the wave in SVG.
 
 ![]({{site.baseurl}}/assets/images/wavedrom.png)
 
@@ -110,7 +110,7 @@ For completeness, somewhere the following library files need to be loaded.  They
 
 ## How it Works
 
-The system is based around [ElkJS](https://github.com/OpenKieler/elkjs), a Javascript translation of [Elk](https://www.eclipse.org/elk/), the Eclipse Layout Kernel.  This codebase takes textual specifications of a graph of nodes and edges and arranges them into something that can be displayed on a 2D screen.  That is where ElkJs ends, with a JavaScript object with added locations and sizes.  From there something has to render the objects, adding styles, etc.  This is what HDElk does, with the help of [SVG.js](https://svgjs.com/), a small library that makes generating SVG trivial.
+The system is based around [ElkJS](https://github.com/OpenKieler/elkjs), a Javascript translation of [Elk](https://www.eclipse.org/elk/), the Eclipse Layout Kernel.  This codebase, which is under 1000 lines, takes textual specifications of a graph of nodes and edges and arranges them into something that can be displayed on a 2D screen.  That is where ElkJs ends, with a JavaScript object with added locations and sizes.  From there something has to render the objects, adding styles, etc.  This is what HDElk does, with the help of [SVG.js](https://svgjs.com/), a small library that makes generating SVG trivial.
 
 ElkJS uses a rather long form of description.
 
