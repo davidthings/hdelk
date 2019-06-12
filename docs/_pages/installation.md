@@ -1,12 +1,11 @@
 ---
 layout: single
 permalink : /installation
+title: Installation
 header:
   title: Installation
   overlay_image: /assets/images/banner.svg
 ---
-
-# Installation
 
 Grab the three js files.  They are all in the [repository](https://github.com/davidthings/hdelk).
 

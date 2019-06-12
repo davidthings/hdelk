@@ -4,12 +4,11 @@ permalink : /tutorial
 toc: true
 toc_label: Contents
 toc_sticky: true
+title: Tutorial
 header:
   title: Tutorial
   overlay_image: /assets/images/banner.svg
 ---
-
-# Tutorial
 
 ## Preliminaries
 
@@ -595,6 +594,7 @@ Until they are connected they just fit in where they can.
 ```js
 var graph = {
     children:[
+        { id:"5", constant:1 },
         { id:"ExtIn", port:1 },
         { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
         { id:"C2", inPorts:[ "In" ], outPorts:[ "Out" ],
@@ -658,6 +658,7 @@ Let's connect them up.
 ```js
     var graph = {
         children:[
+            { id:"5", constant:1 },
             { id:"ExtIn", port:1 },
             { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
             { id:"C2", ports:[ inPorts:[ "In" ], outPorts:[ "Out" ],
