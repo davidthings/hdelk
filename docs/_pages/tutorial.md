@@ -1079,7 +1079,7 @@ Appearance changes can be made in the `hdelk.diagram( )` function.  It takes the
 
 Common errors are not getting the labels right in edge specifications, and missing commas in lists of edges or components.  Of course brace and parenthesis mismatches are their usual hell.
 
-
+*"Uncaught TypeError: Cannot read property 'nodeName' of null"* possibly means that your `<div>` id is not known
 
 ## Extra Diagrams
 
@@ -1097,9 +1097,7 @@ This first monster is especially interesting because of its use of a complex int
             { id: "node_one", ports: ["in", {id:"p1",label:"Loop"},"p2"] },
             { id: "n2", label: "n_2", type:"output", ports: ["p1", "p2", {id:"p3",label:"Long Label"},"p4"] },
             { id: "n3", type:"pipe",  ports: ["p1","p2", "p3"], parameters:[ "Param1", "Param2", "Param3"] },
-            { id: "n4", type:"pipeA", highlight:0, ports: ["p1","p2"]  },
             { id: "n5", type:"pipeB", highlight:0, ports: ["p1","p2","p3"]  },
-            { id: "n6", type:"pipeC", highlight:0, ports: ["p1","p2","p3","p4"]  },
             { id: "n7",
                 highlight:1,
                 inPorts: ["p1", "pIn"], outPorts:["p2"],
@@ -1134,12 +1132,9 @@ This first monster is especially interesting because of its use of a complex int
             ["input","node_one.in"],
             {source:"node_one.p1", target:"n2.p1", bus:1, label:"long bus" },
             {source:"node_one.p2", target:"n3.p1" },
-            {route:["n3.p2", "n4.p1"], highlight:0, label:"optional" },
-            {route:["n4.p2", "n5.p1"], highlight:0 },
-            {route:["n5.p2", "n6.p1"], highlight:0 },
-            {route:["n5.p3", "n6.p3"], bus:1, highlight:0 },
-            {route:["n6.p2", "n2.p2" ], highlight:0 },
-            {route:["n6.p4", "n2.p4" ], bus:1, highlight:0},
+            {route:["n3.p2", "n5.p1"], highlight:0, label:"optional" },
+            {route:["n5.p2", "n2.p2"], highlight:0 },
+            {route:["n5.p3", "n2.p4"], bus:1, highlight:0 },
             ["n3.p2", "n7.p1" ],
             ["n7.p2", "n2.p3" ],
             ["n3.p3", "n7.pIn" ]

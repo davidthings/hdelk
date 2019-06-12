@@ -8,8 +8,8 @@ var hdelk = (function(){
     var node_width = 75;
     var node_height = 75;
 
-    var node_min_width = 30;
-    var node_min_height = 30;
+    var node_min_width = 20;
+    var node_min_height = 20;
 
     var node_highlight_fill_color = ['#FFF', '#DDD', '#4bF','#F88', '#FE6','#7e0'];
     var node_fill_color = '#FFF';
@@ -30,6 +30,7 @@ var hdelk = (function(){
     var node_port_name_text_color = '#FFF';
     var node_port_fill_color = '#777';
 
+    var node_constant_notch = 10;
     var port_height = 18;
     var port_width_padding = 10;
     var port_name_font_size = 12;
@@ -72,6 +73,7 @@ var hdelk = (function(){
 
         elk.layout(graph)
             .then(function(g) {
+
                 var dp = document.getElementById( divname + "_preprocessed" );
                 if ( dp )
                     dp.innerHTML = "<pre style='font-size:10px'>" + JSON.stringify(graph, null, " ") + "</pre>";
@@ -94,10 +96,10 @@ var hdelk = (function(){
             child.layoutOptions = {};
 
         if ( !child.layoutOptions[ 'elk.nodeLabels.placement' ] ) {
-            if ( child.port )
-                child.layoutOptions[ 'elk.nodeLabels.placement' ] = 'V_CENTER H_CENTER INSIDE';
+            if ( child.children && child.children.length > 0 )
+                child.layoutOptions[ 'elk.nodeLabels.placement' ] = 'V_TOP H_CENTER INSIDE';
             else
-                child.layoutOptions[ 'elk.nodeLabels.placement' ] = 'V_TOP H_CENTER INSIDE'; // 'V_TOP H_LEFT INSIDE';
+                child.layoutOptions[ 'elk.nodeLabels.placement' ] = 'V_CENTER H_CENTER INSIDE'; // 'V_TOP H_LEFT INSIDE';
         }
 
         if ( !child.layoutOptions[ 'elk.portConstraints' ] ) {
@@ -113,8 +115,8 @@ var hdelk = (function(){
         }
 
         if ( !child.layoutOptions['elk.nodeSize.options'] ) {
-            child.layoutOptions['elk.nodeSize.options'] = '(' + node_min_width + ',' + node_min_height + ')';
-        }
+           child.layoutOptions['elk.nodeSize.options'] = '(' + node_min_width + ',' + node_min_height + ')';
+       }
 /*
         if ( !child.layoutOptions[ 'elk.layered.nodePlacement.networkSimplex.nodeFlexibility.default' ] ) {
             child.layoutOptions[ 'elk.layered.nodePlacement.networkSimplex.nodeFlexibility.default' ] = "PORT_POSITION NODE_SIZE";
@@ -123,7 +125,11 @@ var hdelk = (function(){
         if ( !child.layoutOptions[ 'elk.layered.nodePlacement.networkSimplex.nodeFlexibility' ] ) {
             child.layoutOptions[ 'elk.layered.nodePlacement.networkSimplex.nodeFlexibility' ] = "PORT_POSITION NODE_SIZE";
         }
-*/
+
+        */
+        if ( !child.id && child.id != "" )
+            child.id = "";
+
         if ( !child.label && child.label != "" )
             child.label = child.id
 
@@ -155,8 +161,8 @@ var hdelk = (function(){
         }
 
         var labels = child.labels;
-        var calculatedNodeWidth = ( child.port ) ? node_port_width : node_width;
-        var calculatedNodeHeight = ( child.port ) ? node_port_height : node_height;
+        var calculatedNodeWidth = ( child.port ) ? node_port_width : node_min_width;
+        var calculatedNodeHeight = ( child.port ) ? node_port_height : node_min_height;
         var labelHeight = 5;
         if ( labels ) {
             labels.forEach( function( item, index ) {
@@ -210,6 +216,74 @@ var hdelk = (function(){
              } );
         }
 
+        var westPorts = child.westPorts;
+        if ( westPorts ) {
+            westPorts.forEach( function( item, index ){
+                if ( typeof( item ) == "string" ) {
+                    var newItem = { id:item };
+                    item = newItem;
+                }
+                ports.unshift( item );
+                if ( !item.layoutOptions )
+                    item.layoutOptions = {};
+
+                if ( !item.layoutOptions[ 'elk.port.side' ] )
+                    item.layoutOptions[ 'elk.port.side' ] = 'WEST'
+             } );
+        }
+
+        var eastPorts = child.eastPorts;
+        if ( eastPorts ) {
+            eastPorts.forEach( function( item, index ){
+                if ( typeof( item ) == "string" ) {
+                    var newItem = { id:item };
+                    item = newItem;
+                }
+                ports.push( item );
+                if ( !item.layoutOptions )
+                    item.layoutOptions = {};
+
+                if ( !item.layoutOptions[ 'elk.port.side' ] )
+                    item.layoutOptions[ 'elk.port.side' ] = 'EAST'
+             } );
+        }
+
+        var northPorts = child.northPorts;
+        if ( northPorts ) {
+            northPorts.forEach( function( item, index ){
+                if ( typeof( item ) == "string" ) {
+                    var newItem = { id:item };
+                    item = newItem;
+                }
+                ports.push( item );
+                if ( !item.layoutOptions )
+                    item.layoutOptions = {};
+
+                item.vertical = 1;
+
+                if ( !item.layoutOptions[ 'elk.port.side' ] )
+                    item.layoutOptions[ 'elk.port.side' ] = 'NORTH'
+             } );
+        }
+
+        var southPorts = child.southPorts;
+        if ( southPorts ) {
+            southPorts.forEach( function( item, index ){
+                if ( typeof( item ) == "string" ) {
+                    var newItem = { id:item };
+                    item = newItem;
+                }
+                ports.push( item );
+                if ( !item.layoutOptions )
+                    item.layoutOptions = {};
+
+                item.vertical = 1;
+
+                if ( !item.layoutOptions[ 'elk.port.side' ] )
+                    item.layoutOptions[ 'elk.port.side' ] = 'SOUTH'
+             } );
+        }
+
         var outPorts = child.outPorts;
         if ( outPorts ) {
             outPorts.forEach( function( item, index ){
@@ -236,6 +310,7 @@ var hdelk = (function(){
                 ports.push( item );
 
                 item.param = 1;
+                item.vertical = 1;
 
                 if ( !item.layoutOptions )
                     item.layoutOptions = {};
@@ -275,7 +350,7 @@ var hdelk = (function(){
                 item.height = port_height;
 
             // swap!
-            if ( item.param ) {
+            if ( item.vertical ) {
                 var t = item.width;
                 item.width = item.height;
                 item.height = t;
@@ -290,8 +365,18 @@ var hdelk = (function(){
                     edges[ index ] = newItem;
                     newItem.sources = [ item[ 0 ] ];
                     newItem.targets = [ item[ 1 ] ];
-                    if ( item[ 2 ] )
-                        newItem.label = item[ 2 ];
+                    if ( item[ 2 ] ) {
+                        if ( typeof( item[2] ) == "string" )    
+                            newItem.label = item[ 2 ];
+                        else
+                            newItem.bus = 1;
+                    }
+                    if ( item[ 3 ] ) {
+                        if ( typeof( item[3] ) == "string" )    
+                            newItem.label = item[ 3 ];
+                        else
+                            newItem.bus = 1;
+                    }
                     item = newItem;
                 }
                 if ( !item.id )
@@ -356,7 +441,7 @@ var hdelk = (function(){
 
         var portColor = ( child.highlight || child.highlight == 0 ) ? port_highlight_fill_color[ child.highlight ] : port_fill_color;
 
-        node_body( group, child.id, child.x + offsetX, child.y + offsetY, child.width, child.height, childColor, child.highlight, portColor );
+        node_body( group, child.id, child.x + offsetX, child.y + offsetY, child.width, child.height, childColor, child.highlight, portColor, child.constant );
 
         var labels = child.labels;
         if ( labels ) {
@@ -414,20 +499,42 @@ var hdelk = (function(){
                 else
                     portText = item.id;
 
+                var strokeWidth;
+                var strokeColor;
+                var fillColor;
+                var nameColor;
+
                 if ( item.param ) {
-                    var strokeWidth = child.highlight ? node_highlight_stroke_width : node_stroke_width;
-                    group.rect(item.width, item.height).move(offsetX + child.x+item.x,offsetY + child.y+item.y).attr({ fill:childColor, 'stroke-width': node_stroke_width, stroke:portColor }).stroke({width:strokeWidth});
+                    nameColor = ( child.highlight || child.highlight == 0 ) ? node_highlight_name_text_color[ child.highlight ] : node_name_text_color;
+                    strokeWidth = child.highlight ? node_highlight_stroke_width : node_stroke_width;
+                    strokeColor = portColor;
+                    fillColor = childColor;
+                } else {
+                    nameColor = port_text_color;
+                    strokeWidth = 0;
+                    strokeColor = portColor;
+                    fillColor = portColor;
+                }
 
-                    var nameColor = ( child.highlight || child.highlight == 0 ) ? node_highlight_name_text_color[ child.highlight ] : node_name_text_color;
+                group.rect(item.width, item.height).move(offsetX + child.x+item.x,offsetY + child.y+item.y)
+                                                   .attr({ fill:fillColor, 'stroke-width': strokeWidth, stroke:strokeColor })
+                                                   .stroke({width:strokeWidth});
+                var portTextItem = group.text(portText).style("font-size:"+port_name_font_size).fill({color:nameColor});
+                var portTextWidth = portTextItem.node.getComputedTextLength();
 
-                    var portTextItem = group.text(portText).style("font-size:"+port_name_font_size).fill({color:nameColor});
-                    var portTextWidth = portTextItem.node.getComputedTextLength();
-                        portTextItem.transform( { rotation:90, cx:0, cy:0  } ).move( offsetY + child.y+item.y+(item.height-portTextWidth)/2, -(offsetX + child.x+item.x+item.width-(item.width-port_name_font_size)/2 + 2) );
+                
+                if ( item.vertical ) {
+                    //group.rect(item.width, item.height).move(offsetX + child.x+item.x,offsetY + child.y+item.y)
+                    //                                   .attr({ fill:childColor, 'stroke-width': node_stroke_width, stroke:portColor })
+                    //                                   .stroke({width:strokeWidth});
+                    //var portTextItem = group.text(portText).style("font-size:"+port_name_font_size).fill({color:nameColor});
+                    //var portTextWidth = portTextItem.node.getComputedTextLength();
+                    portTextItem.transform( { rotation:90, cx:0, cy:0  } ).move( offsetY + child.y+item.y+(item.height-portTextWidth)/2, -(offsetX + child.x+item.x+item.width-(item.width-port_name_font_size)/2 + 2) );
                 }
                 else {
-                    group.rect( item.width, item.height ).attr({ fill:portColor }).move(offsetX + child.x+item.x, offsetY + child.y+item.y );
-                    var portTextItem = group.text(portText).style("font-size:"+port_name_font_size).fill({color:port_text_color});
-                    var portTextWidth = portTextItem.node.getComputedTextLength();
+                    //group.rect( item.width, item.height ).attr({ fill:portColor }).move(offsetX + child.x+item.x, offsetY + child.y+item.y );
+                    //var portTextItem = group.text(portText).style("font-size:"+port_name_font_size).fill({color:port_text_color});
+                    //var portTextWidth = portTextItem.node.getComputedTextLength();
                         // draw the background
                     portTextItem.move(offsetX + child.x+item.x+(item.width-portTextWidth)/2, offsetY + child.y+item.y + 2);
                 }
@@ -437,10 +544,16 @@ var hdelk = (function(){
         return group;
     }
 
-    var node_body = function( draw, name, x, y, width, height, color, highlight, stroke_color ) {
+    var node_body = function( draw, name, x, y, width, height, color, highlight, stroke_color, constant ) {
         var group = draw.group();
         var strokeWidth = highlight ? node_highlight_stroke_width : node_stroke_width;
-        group.rect(width, height).attr({ fill:color, 'stroke-width': node_stroke_width, stroke:stroke_color }).stroke({width:strokeWidth}).move(x,y);
+        var shape;
+        if ( constant ) {
+            shape = group.polygon( [[0,0],[width-node_constant_notch,0],[width,node_constant_notch],[width,height],[0,height]]);
+        } else {
+            shape = group.rect(width, height);
+        }
+        shape.attr({ fill:color, 'stroke-width': node_stroke_width, stroke:stroke_color }).stroke({width:strokeWidth}).move(x,y);
         return group;
     }
 
@@ -501,7 +614,7 @@ var hdelk = (function(){
         var labels = edge.labels;
         if ( labels ) {
 
-            var label_color = edge.highlight ? edge_label_highlight_fill_color[ edge.highlight ] : edge_label_text_color;
+            var label_color = ( edge.highlight || edge.highlight == 0 ) ? edge_label_highlight_fill_color[ edge.highlight ] : edge_label_text_color;
 
             labels.forEach( function( item, index ) {
 
