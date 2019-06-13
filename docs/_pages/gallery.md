@@ -105,7 +105,7 @@ header:
 <script type="text/javascript">
 
     var graph = {
-        color: "#EEE",
+        color: "#333",
         children: [
             { id: "HOST", outPorts: ["usb"],
                 children: [
@@ -185,4 +185,71 @@ header:
     }
 
     hdelk.layout( graph, "pipe_helper_modules" );
+</script>
+
+## SpokeFGA Ring Network
+
+<div id="networking_idea"></div>
+
+<script type="text/javascript">
+
+    var graph = {
+        color: "#333",
+        children: [
+            { id: "FPGA1",
+                westPorts:[ "net_in" ],
+                eastPorts:[ "net_out" ],
+                children: [
+                    { id: "to_host", label:"to host", port:1 },
+                    { id: "from_host", label:"from host", port:1 },
+                    { id: "n1", label: "network", northPorts:["in","out"], ports:["net_in","net_out"]},
+                    { id: "i1", label:"Internals", type:"Verilog", ports:[ "h_in","h_out"], southPorts:[ "in","out" ], highlight:4  }
+                ],
+                edges: [
+                    ["i1.h_out","to_host"], 
+                    ["from_host","i1.h_in"],
+                    ["i1.out","n1.in"],
+                    ["n1.out","i1.in"],
+                    ["FPGA1.net_in","n1.net_in"],
+                    ["n1.net_out","FPGA1.net_out"]
+                ] 
+            },
+            { id: "FPGA2",
+                westPorts:[ "net_in" ],
+                eastPorts:[ "net_out" ],
+                children: [
+                    { id:"n2", label: "network", southPorts:["out","in"], westPorts:["net_in"], eastPorts:["net_out"]},
+                    { id:"i2", label:"Internals", type:"Verilog", northPorts:[ "in","out" ], highlight:4  }
+                ],
+                edges: [
+                    ["i2.out","n2.in"],
+                    ["n2.out","i2.in"],
+                    ["FPGA2.net_in","n2.net_in"],
+                    ["n2.net_out","FPGA2.net_out"]
+                ] 
+            },
+            { id: "FPGA3",
+                westPorts:[ "net_in" ],
+                eastPorts:[ "net_out" ],
+                children: [
+                    { id:"n3", label: "network", southPorts:["out","in"], westPorts:["net_in"], eastPorts:["net_out"]},
+                    { id:"i3", label:"Internals", type:"Verilog", northPorts:[ "in","out" ], highlight:4  }
+                ],
+                edges: [
+                    ["i3.out","n3.in"],
+                    ["n3.out","i3.in"],
+                    ["FPGA3.net_in","n3.net_in"],
+                    ["n3.net_out","FPGA3.net_out"]
+                ] 
+            }
+
+        ],
+        edges:[
+            ["FPGA1.net_out","FPGA2.net_in"],
+            ["FPGA2.net_out","FPGA3.net_in"],
+            ["FPGA3.net_out","FPGA1.net_in"]
+        ]
+    }
+
+    hdelk.layout( graph, "networking_idea" );
 </script>
