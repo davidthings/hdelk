@@ -105,7 +105,7 @@ header:
 <script type="text/javascript">
 
     var graph = {
-        color: "#333",
+        color: "#555",
         children: [
             { id: "HOST", outPorts: ["usb"],
                 children: [
@@ -194,7 +194,7 @@ header:
 <script type="text/javascript">
 
     var graph = {
-        color: "#333",
+        color: "#555",
         children: [
             { id: "FPGA1",
                 westPorts:[ "net_in" ],
