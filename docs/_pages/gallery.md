@@ -203,7 +203,7 @@ header:
                     { id: "to_host", label:"to host", port:1 },
                     { id: "from_host", label:"from host", port:1 },
                     { id: "n1", label: "network", northPorts:["in","out"], ports:["net_in","net_out"]},
-                    { id: "i1", label:"Internals", type:"Verilog", ports:[ "h_in","h_out"], southPorts:[ "in","out" ], highlight:4  }
+                    { id: "i1", label:"Internals", type:"Verilog", ports:[ "h_in","h_out"], southPorts:[ "in","out" ], highlight:1  }
                 ],
                 edges: [
                     ["i1.h_out","to_host"], 
