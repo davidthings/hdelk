@@ -120,7 +120,7 @@ header:
                     { id: "usb_s", label:"USB CDC", inPorts: ["usb"], outPorts:[ "in", "out" ]  },
                     { id: "param1", type:"remove int string", inPorts: ["in"], outPorts:[ "out" ], southPorts:["int"]  },
                     { id: "param2", type:"remove int string", inPorts: ["in"], outPorts:[ "out" ], southPorts:["int"]  },
-                    { id: "f", label:"f(a,b)->c", inPorts:["a", "b" ], outPorts:["c"], highlight:4  },
+                    { id: "f", label:"f(a,b)->c", inPorts:["a", "b" ], outPorts:["c"], highlight:1  },
                     { id: "return", type:"add int string", inPorts: ["in"], northPorts:["int"], outPorts:[ "out" ]  },
                     { id: "unique", inPorts: ["in"], outPorts:[ "out" ]  }
                 ],
@@ -219,7 +219,7 @@ header:
                 eastPorts:[ "net_out" ],
                 children: [
                     { id:"n2", label: "network", southPorts:["out","in"], westPorts:["net_in"], eastPorts:["net_out"]},
-                    { id:"i2", label:"Internals", type:"Verilog", northPorts:[ "in","out" ], highlight:4  }
+                    { id:"i2", label:"Internals", type:"Verilog", northPorts:[ "in","out" ], highlight:1  }
                 ],
                 edges: [
                     ["i2.out","n2.in"],
@@ -233,7 +233,7 @@ header:
                 eastPorts:[ "net_out" ],
                 children: [
                     { id:"n3", label: "network", southPorts:["out","in"], westPorts:["net_in"], eastPorts:["net_out"]},
-                    { id:"i3", label:"Internals", type:"Verilog", northPorts:[ "in","out" ], highlight:4  }
+                    { id:"i3", label:"Internals", type:"Verilog", northPorts:[ "in","out" ], highlight:1  }
                 ],
                 edges: [
                     ["i3.out","n3.in"],
