@@ -2,7 +2,7 @@
 layout: single
 header:
   title: Labels Ports
-  overlay_image: /assets/images/banner.svg
+  overlay_image: /assets/images/banner.png
 ---
 
 Some simple improvements to the port and edge spec's.

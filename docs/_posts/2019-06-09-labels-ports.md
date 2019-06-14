@@ -2,7 +2,7 @@
 layout: single
 header:
   title: Labels Ports
-  overlay_image: /assets/images/banner.svg
+  overlay_image: /assets/images/banner.png
 ---
 
 Did a significant upgrade of the labeling and port placement code.

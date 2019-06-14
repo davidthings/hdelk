@@ -1,5 +1,8 @@
 ---
 layout: single
+header:
+  title: Site Start
+  overlay_image: /assets/images/banner.png
 ---
 
 Created the HDElk repo
