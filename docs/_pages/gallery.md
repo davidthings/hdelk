@@ -7,7 +7,7 @@ toc_sticky: true
 title: Gallery
 header:
   title: Gallery
-  overlay_image: /assets/images/banner.svg
+  overlay_image: /assets/images/banner.png
 ---
 
 <!-- ---------------------------------------------------------------------------------------------------------------------------------------- -->

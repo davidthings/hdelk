@@ -1,5 +1,5 @@
 
-![](images/banner.svg)
+![](images/banner.png)
 
 # HDElk
 

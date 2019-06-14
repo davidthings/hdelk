@@ -7,7 +7,7 @@ toc_sticky: true
 title: Tutorial
 header:
   title: Tutorial
-  overlay_image: /assets/images/banner.svg
+  overlay_image: /assets/images/banner.png
 ---
 
 ## Preliminaries

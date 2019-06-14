@@ -6,7 +6,7 @@ toc_label: Contents
 toc_sticky: true
 header:
   title: Dev
-  overlay_image: /assets/images/banner.svg
+  overlay_image: /assets/images/banner.png
 ---
 
 # Development
@@ -161,21 +161,18 @@ header:
 
     hdelk.layout( HDElk_graph, "HDElk_diagram" );
 </script>
-
 <div id="title_diagram"></div>
 
 <script>
     var title_graph = {
-        id: "",
         color: "#555",
         children: [
             { id: "in", port: 1, highlight:1 },
             { id: "one", color: "#999", ports: ["in", "out"] },
             { id: "two", color: "#999", ports: ["in", "out"] },
             { id: "three", color: "#999", ports: ["in", "out"] },
-            { id: "four", label:"",
+            { id: "four", label:"", inPorts:["in"], outPorts:["out"],
               color: "#666",
-              inPorts: ["in"], outPorts:[ "out"],
               children:[
                 {id:"Child1", highlight:2, ports:["in", "outA", "outB"]},
                 {id:"Child2A", highlight:3, ports:["in", "out"]},
@@ -208,6 +205,9 @@ header:
     }
 
     hdelk.layout( title_graph, "title_diagram" );
+
+
+</script>
 
 
 </script>
