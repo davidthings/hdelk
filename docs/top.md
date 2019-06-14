@@ -4,11 +4,11 @@ permalink : /
 toc: true
 toc_label: Contents
 toc_sticky: true
+title: "HDElk"
 header:
+  title: "HDElk"
   overlay_image: /assets/images/banner.svg
 ---
-
-## Introduction
 
 HDElk is a web-based diagramming tool designed to permit the easy visual representation of diagrams which feature sets of interconnected nodes in web pages.  The diagram is described in [JSON](https://www.json.org/) and then rendered in [SVG](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics)
 
