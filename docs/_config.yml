@@ -85,11 +85,12 @@ naver_site_verification  :
 # Social Sharing
 twitter:
   username               : davidthings
+  card                   : summary
 facebook:
   username               :
   app_id                 :
   publisher              :
-og_image                 : # Open Graph/Twitter default site image
+#og_image                 : 
 # For specifying social profiles
 # - https://developers.google.com/structured-data/customize/social-profiles
 social:
