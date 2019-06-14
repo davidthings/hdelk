@@ -19,7 +19,7 @@ locale                   : "en-US"
 title                    : "HDElk"
 title_separator          : "-"
 name                     : "HDElk"
-description              : "Simple Web-based HDL Diagrams"
+description              : "Create Node Graph Diagrams in Javascript"
 url                      : https://davidthings.github.io/
 baseurl                  : /hdelk
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -93,7 +93,7 @@ og_image                 : # Open Graph/Twitter default site image
 # - https://developers.google.com/structured-data/customize/social-profiles
 social:
   type                   : # Person or Organization (defaults to Person)
-  name                   : # If the user or organization name differs from the site's name
+  name                   : "David Williams"
   links: # An array of links to social media profiles
 
 # Analytics
@@ -220,6 +220,7 @@ plugins:
   - jekyll-feed
   - jemoji
   - jekyll-include-cache
+  - jekyll-seo-tag
 
 # mimic GitHub Pages with --safe
 whitelist:
