@@ -19,7 +19,9 @@ header:
 var dg = {  
             layoutOptions: {
                 // "elk.algorithm":"stress", 
-                "elk.layered.nodePlacement.favorStraightEdges":1 
+                "elk.layered.priority.straightness":100,
+                "elk.layered.nodePlacement.favorStraightEdges":1,
+                "elk.layered.nodePlacement.bk.edgeStraightening":"IMPROVE_STRAIGHTNESS"
             },
             children:[],
             edges:[]
@@ -33,15 +35,20 @@ for ( var j = 0; j < 4; j++ ) {
     for ( i = 0; i < 3; i++ ) {
         dg.edges.push( ["N"+(h+i)+".E", "N"+(h+i+1)+".W"] )
     }
+   
     if ( j < 3 ) {
         for ( i = 0; i < 4; i++ ) {
             var v = h + i; 
             dg.edges.push( { route:["N"+(v)+".S", "N"+(v+4)+".N"],
-                             layoutOptions: { "elk.layered.nodePlacement.favorStraightEdges":1 } 
-                           }
- )
+                             layoutOptions: { 
+                                 "elk.layered.priority.straightness":100,
+                                 "elk.layered.nodePlacement.favorStraightEdges":1,
+                                 "elk.layered.nodePlacement.bk.edgeStraightening":"IMPROVE_STRAIGHTNESS"
+                             } 
+                           } )
         }
     }
+    
 }
 
 hdelk.layout( dg, "via_code" );
@@ -245,8 +252,4 @@ hdelk.layout( dg, "via_code" );
 
 
 </script>
-
-
-</script>
-
 
