@@ -11,6 +11,45 @@ header:
 
 # Development
 
+## Coded
+
+<div id="via_code"></div>
+<script>
+
+var dg = {  
+            layoutOptions: {
+                // "elk.algorithm":"stress", 
+                "elk.layered.nodePlacement.favorStraightEdges":1 
+            },
+            children:[],
+            edges:[]
+        };
+
+for ( var i = 0; i < 16; i++ )
+    dg.children.push( {id:"N"+i, label:"", northPorts:["N"], southPorts:["S"], eastPorts:["E"], westPorts:["W"]})
+
+for ( var j = 0; j < 4; j++ ) {
+    var h = j * 4;
+    for ( i = 0; i < 3; i++ ) {
+        dg.edges.push( ["N"+(h+i)+".E", "N"+(h+i+1)+".W"] )
+    }
+    if ( j < 3 ) {
+        for ( i = 0; i < 4; i++ ) {
+            var v = h + i; 
+            dg.edges.push( { route:["N"+(v)+".S", "N"+(v+4)+".N"],
+                             layoutOptions: { "elk.layered.nodePlacement.favorStraightEdges":1 } 
+                           }
+ )
+        }
+    }
+}
+
+hdelk.layout( dg, "via_code" );
+
+</script>    
+
+## Diagram Boundaries
+
 <div id="dev"></div>
 
 <div id="dev_input"></div>
@@ -67,8 +106,6 @@ header:
 
     hdelk.layout( graph, "dev" );
 </script>
-
-
 
 ## Back story
 
