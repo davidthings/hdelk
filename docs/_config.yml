@@ -20,7 +20,7 @@ title                    : "HDElk"
 title_separator          : "-"
 name                     : "HDElk"
 description              : "Create Node Graph Diagrams in Javascript"
-url                      : https://davidthings.github.io/
+url                      : https://davidthings.github.io
 baseurl                  : /hdelk
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
@@ -77,7 +77,7 @@ google:
   instant_search         : # false (default), true
 
 # SEO Related
-google_site_verification : 
+google_site_verification :
 bing_site_verification   :
 yandex_site_verification :
 naver_site_verification  :
@@ -90,7 +90,7 @@ facebook:
   username               :
   app_id                 :
   publisher              :
-#og_image                 : 
+#og_image                 :
 # For specifying social profiles
 # - https://developers.google.com/structured-data/customize/social-profiles
 social:
