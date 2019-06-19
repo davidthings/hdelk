@@ -112,7 +112,7 @@ For completeness, somewhere the following library files need to be loaded.  They
 
 ## How it Works
 
-The system is based around [ElkJS](https://github.com/OpenKieler/elkjs), a JavaScript translation of [Elk](https://www.eclipse.org/elk/), the Eclipse Layout Kernel.  This codebase, which is under 1000 lines, takes textual specifications of a graph of nodes and edges and arranges them into something that can be displayed on a 2D screen.  That is where ElkJs ends, with a JavaScript object with added locations and sizes.  From there something has to render the objects, adding styles, etc.  This is what HDElk does, with the help of [SVG.js](https://svgjs.com/), a small library that makes generating SVG trivial.
+The system is based around [ElkJS](https://github.com/OpenKieler/elkjs), a JavaScript translation of [Elk](https://www.eclipse.org/elk/), the Eclipse Layout Kernel.  This codebase takes textual specifications of a graph of nodes and edges and arranges them into something that can be displayed on a 2D screen.  That is where ElkJs ends, with a JavaScript object with added locations and sizes.  From there something has to render the objects, adding styles, etc.  This is what HDElk does with the help of [SVG.js](https://svgjs.com/), a small library that makes generating SVG trivial. `HDElk.js` is a single file, well under 1000 lines.
 
 ElkJS uses a rather long form of description.
 
