@@ -14,6 +14,22 @@ layout: default
   {% endunless %}
 {% endif %}
 
+{% if page.codemirror %}
+    <script src="{{site.baseurl}}/assets/js/codemirror.js"></script>
+    <link rel="stylesheet" href="{{site.baseurl}}/assets/css/codemirror.css">
+    <script src="{{site.baseurl}}/assets/js/cm_javascript.js"></script>
+{% endif %}
+
+{% if page.permissivejson %}
+    <script src="{{site.baseurl}}/assets/js/permissive_json_tokenizer.js"></script>
+    <script src="{{site.baseurl}}/assets/js/permissive_json.js"></script>
+{% endif %}
+
+{% if page.filesaver %}
+    <script src="{{site.baseurl}}/assets/js/FileSaver.js"></script>
+{% endif %}
+
+
 <div id="main" role="main">
   {% include sidebar.html %}
 

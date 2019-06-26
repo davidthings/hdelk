@@ -5,6 +5,7 @@ toc: true
 toc_label: Contents
 toc_sticky: true
 title: "HDElk"
+excerpt: "Design diagrams in JSON and have them rendered in SVG"
 header:
   title: "HDElk"
   overlay_image: /assets/images/banner.png
@@ -20,6 +21,7 @@ What follows is an overview of the project, but if you're eager to get in to the
 
 - [Installation]({{site.baseurl}}/installation)
 - [Tutorial]({{site.baseurl}}/tutorial)
+- [Editor]({{site.baseurl}}/editor)
 
 ## Motivation
 
@@ -236,7 +238,6 @@ The two main functions that do HDElk work are `transform()` and `diagram()` both
 
 ### Enhancements
 
-- **Add a live editor** Create a live editor for experimentation
 - **Push Error Messages Into the Div** When there is a problem, make sure error messages are visible
 - **Create a Style system** There is only one "style", any others are the "find the place in the code and change it" kind
 - **Add instructions for use with Node.js** So far this is a browser focused effort.

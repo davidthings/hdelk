@@ -11,14 +11,15 @@ header:
 
 # Development
 
+
 ## Coded
 
 <div id="via_code"></div>
 <script>
 
-var dg = {  
+var dg = {
             layoutOptions: {
-                // "elk.algorithm":"stress", 
+                // "elk.algorithm":"stress",
                 "elk.layered.priority.straightness":100,
                 "elk.layered.nodePlacement.favorStraightEdges":1,
                 "elk.layered.nodePlacement.bk.edgeStraightening":"IMPROVE_STRAIGHTNESS"
@@ -35,25 +36,25 @@ for ( var j = 0; j < 4; j++ ) {
     for ( i = 0; i < 3; i++ ) {
         dg.edges.push( ["N"+(h+i)+".E", "N"+(h+i+1)+".W"] )
     }
-   
+
     if ( j < 3 ) {
         for ( i = 0; i < 4; i++ ) {
-            var v = h + i; 
+            var v = h + i;
             dg.edges.push( { route:["N"+(v)+".S", "N"+(v+4)+".N"],
-                             layoutOptions: { 
+                             layoutOptions: {
                                  "elk.layered.priority.straightness":100,
                                  "elk.layered.nodePlacement.favorStraightEdges":1,
                                  "elk.layered.nodePlacement.bk.edgeStraightening":"IMPROVE_STRAIGHTNESS"
-                             } 
+                             }
                            } )
         }
     }
-    
+
 }
 
 hdelk.layout( dg, "via_code" );
 
-</script>    
+</script>
 
 ## Diagram Boundaries
 
@@ -85,7 +86,7 @@ hdelk.layout( dg, "via_code" );
                       inPorts:[ "In", "Out" ] },
                     { id:"GC2", type:"GC2 Type Type Type", parameters:["InSpec", "OutSpec"], ports:[ "In", "Out" ] },
                     { id:"Little", label:"", ports:[ "In", "Out" ] },
-                    { id:"Direct", label:"", northPorts:[ "North1", "North2" ], southPorts:[ "South1", "South2" ], 
+                    { id:"Direct", label:"", northPorts:[ "North1", "North2" ], southPorts:[ "South1", "South2" ],
                                              eastPorts:[ "East1", "East2" ], westPorts:[ "West1", "West2" ] },
                     { id:"Portly1", highlight:1, type:"-lots-", inPorts:[ "Start1", "Middle1", "End1" ], outPorts:[ "Start2", "Middle2", "End2" ] },
                     { id:"Portly2", highlight:1, type:"-lots-", inPorts:[ "Start1", "Middle1", "End1" ], outPorts:[ "Start2", "Middle2", "End2" ] }

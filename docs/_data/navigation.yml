@@ -6,6 +6,8 @@ main:
     url: /installation
   - title: "Tutorial"
     url: /tutorial
+  - title: "Editor"
+    url: /editor
   - title: "GitHub"
     url: https://github.com/davidthings/hdelk
   - title: "News"

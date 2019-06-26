@@ -5,6 +5,7 @@ toc: true
 toc_label: Contents
 toc_sticky: true
 title: Tutorial
+excerpt: "Learn how to create HDElk diagrams step by step"
 header:
   title: Tutorial
   overlay_image: /assets/images/banner.png
@@ -130,7 +131,7 @@ For even more control, ports may also be added to a particular side:
 
     var graph = {
         children:[
-            { id:"C1", label:"", northPorts:[ "north1", "north2" ], southPorts:[ "south1", "south2" ], 
+            { id:"C1", label:"", northPorts:[ "north1", "north2" ], southPorts:[ "south1", "south2" ],
                                         eastPorts:[ "east1", "east2" ], westPorts:[ "west1", "west2" ] }
         ]
     }
@@ -143,7 +144,7 @@ Ports are added, with the North and South ports being rendered vertically.
 ```js
 var graph = {
     children:[
-        { id:"C1", label:"", northPorts:[ "north1", "north2" ], southPorts:[ "south1", "south2" ], 
+        { id:"C1", label:"", northPorts:[ "north1", "north2" ], southPorts:[ "south1", "south2" ],
                              eastPorts:[ "east1", "east2" ], westPorts:[ "west1", "west2" ] }
     ]
 }
@@ -848,7 +849,7 @@ var graph = {
 
 ## Edge Properties
 
-All our edges so far have been simple one wire connections.  Since mutliwire connections are very common, it is sometimes handy to be able to distinguish them.  This can be done in one of two ways - either by adding a 1 to the simple edge spec, or by adding the property `bus:1` to a new object form of edge specification.  
+All our edges so far have been simple one wire connections.  Since mutliwire connections are very common, it is sometimes handy to be able to distinguish them.  This can be done in one of two ways - either by adding a 1 to the simple edge spec, or by adding the property `bus:1` to a new object form of edge specification.
 
 We've been using the super compact edge spec.  Adding the bus flag is trivial:
 

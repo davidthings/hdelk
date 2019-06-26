@@ -1,5 +1,6 @@
 ---
 layout: single
+excerpt: New Site - HDElk
 header:
   title: Site Start
   overlay_image: /assets/images/banner.png

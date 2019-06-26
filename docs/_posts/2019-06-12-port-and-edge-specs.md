@@ -1,5 +1,6 @@
 ---
 layout: single
+excerpt: "Better Edge and Port Specs"
 header:
   title: Labels Ports
   overlay_image: /assets/images/banner.png
@@ -15,7 +16,7 @@ Some simple improvements to the port and edge spec's.
         children:[
             { id:"Little1", ports:[ "In", "Out" ] },
             { id:"Little2", ports:[ "In", "Out" ] },
-            { id:"Direct", northPorts:[ "North1", "North2" ], southPorts:[ "South1", "South2" ], 
+            { id:"Direct", northPorts:[ "North1", "North2" ], southPorts:[ "South1", "South2" ],
                                         eastPorts:[ "East1", "East2" ], westPorts:[ "West1", "West2" ] }
         ],
         edges:[

@@ -1,5 +1,6 @@
 ---
 layout: single
+excerpt: "Labeling and Port Placement Improvements"
 header:
   title: Labels Ports
   overlay_image: /assets/images/banner.png
