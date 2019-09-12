@@ -849,7 +849,7 @@ var graph = {
 
 ## Edge Properties
 
-All our edges so far have been simple one wire connections.  Since mutliwire connections are very common, it is sometimes handy to be able to distinguish them.  This can be done in one of two ways - either by adding a 1 to the simple edge spec, or by adding the property `bus:1` to a new object form of edge specification.
+All our edges so far have been simple one wire connections.  Since multiwire connections are very common, it is sometimes handy to be able to distinguish them.  This can be done in one of two ways - either by adding a 1 to the simple edge spec, or by adding the property `bus:1` to a new object form of edge specification.
 
 We've been using the super compact edge spec.  Adding the bus flag is trivial:
 
@@ -940,6 +940,108 @@ var graph = {
     ]
 }
 ```
+
+Elk *really* likes to render links Left to Right.  So if you happen to add an edge that goes in the opposite direction, things can get pretty ugly.
+
+<div id="connecting_sub_nodes_reversed"></div>
+
+<script type="text/javascript">
+
+    var graph = {
+        color:"#EEE",
+        children:[
+            { id:"C1", highlight:2, inPorts:[ "Loopback", "In" ], outPorts:[ "Out" ] },
+            { id:"C2", highlight:1, inPorts:[ "In"], outPorts:[ "Out", "Loopback" ] },
+            { id:"C3", highlight:3,  }
+        ],
+        edges:[
+            { route:["C1.Out","C2.In"], bus:1, highlight:2 },
+            ["C2.Out","C3",1],
+            ["C2.Loopback", "C1.Loopback" ]
+        ]
+    }
+
+    hdelk.layout( graph, "connecting_sub_nodes_reversed" );
+</script>
+
+Note here the extra port and the connection in reverse.
+
+```js
+    var graph = {
+        color:"#EEE",
+        children:[
+            { id:"C1", highlight:2, inPorts:[ "Loopback", "In" ], outPorts:[ "Out" ] },
+            { id:"C2", highlight:1, inPorts:[ "In"], outPorts:[ "Out", "Loopback" ] },
+            { id:"C3", highlight:3,  }
+        ],
+        edges:[
+            { route:["C1.Out","C2.In"], bus:1, highlight:2 },
+            ["C2.Out","C3",1],
+            ["C2.Loopback", "C1.Loopback" ]
+        ]
+    }
+```
+
+The fix here is to tell Elk that you intend for the edge to run in the other direction.  Internally it draws the edge in reverse but terminates it in reverse too.
+
+<div id="connecting_sub_nodes_reversed_fixed"></div>
+
+<script type="text/javascript">
+
+    var graph = {
+        color:"#EEE",
+        children:[
+            { id:"C1", highlight:2, inPorts:[ "Loopback", "In" ], outPorts:[ "Out" ] },
+            { id:"C2", highlight:1, inPorts:[ "In"], outPorts:[ "Out", "Loopback" ] },
+            { id:"C3", highlight:3  }
+        ],
+        edges:[
+            { route:["C1.Out","C2.In"], bus:1, highlight:2 },
+            ["C2.Out","C3",1],
+            ["C2.Loopback", "C1.Loopback", -1 ]
+        ]
+    }
+
+    hdelk.layout( graph, "connecting_sub_nodes_reversed_fixed" );
+</script>
+
+Here the new edge has a "-1" indicating that it is reversed.
+
+```js
+...
+            ["C2.Loopback", "C1.Loopback", -1 ]
+...
+```
+If you need to use the expanded form, the new edge can reversed with the `reverse` attribute.
+
+<div id="connecting_sub_nodes_reversed_fixed_expanded"></div>
+
+<script type="text/javascript">
+
+    var graph = {
+        color:"#EEE",
+        children:[
+            { id:"C1", highlight:2, inPorts:[ "Loopback", "In" ], outPorts:[ "Out" ] },
+            { id:"C2", highlight:1, inPorts:[ "In"], outPorts:[ "Out", "Loopback" ] },
+            { id:"C3", highlight:3,  }
+        ],
+        edges:[
+            { route:["C1.Out","C2.In"], bus:1, highlight:2 },
+            ["C2.Out","C3",1],
+            { route:["C2.Loopback", "C1.Loopback"], bus:1, reverse:1 }
+        ]
+    }
+
+    hdelk.layout( graph, "connecting_sub_nodes_reversed_fixed_expanded" );
+</script>
+
+```js
+...
+            { route:["C2.Loopback", "C1.Loopback"], bus:1, reverse:1 }
+...
+```
+
+
 
 ## Edge Labels
 

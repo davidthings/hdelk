@@ -64,7 +64,7 @@ Loading
     label:"Simple",
     color:"#EEE",
     children:[
-        { id:"P1", port:1  }
+        { id:"P1", port:1  },
         { id:"C1", highlight:2, ports:[ "In", "Out" ] },
         { id:"C2", highlight:3, ports:[ "In", "Out" ] },
         { id:"P2", port:1  }

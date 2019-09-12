@@ -392,22 +392,28 @@ var hdelk = (function(){
                             newItem.label = item[ 2 ];
                         else if ( item[ 2 ] == -1 ) {
                             newItem.reverse = 1;
-                            // flip the source and target
-                            newItem.sources = [ item[ 1 ] ];
-                            newItem.targets = [ item[ 0 ] ];
                         } else
-                            newItem.bus = 1;
+                            if ( item[2 ] == 1 )
+                                newItem.bus = 1;
                     }
                     if ( item[ 3 ] ) {
                         if ( typeof( item[3] ) == "string" )
                             newItem.label = item[ 3 ];
                         else if ( item[ 3 ] == -1 ) {
                             newItem.reverse = 1;
-                            // flip the source and target
-                            newItem.sources = [ item[ 1 ] ];
-                            newItem.targets = [ item[ 0 ] ];
                         } else
-                            newItem.bus = 1;
+                            if ( item[3 ] == 1 )
+                                newItem.bus = 1;
+                    }
+                    if ( item[ 4 ] ) {
+                        if ( typeof( item[4] ) == "string" )
+                            newItem.label = item[ 4 ];
+                        else if ( item[ 4 ] == -1 ) {
+                            newItem.reverse = 1;
+                            // flip the source and target
+                        } else
+                            if ( item[ 4 ] == 1 )
+                                newItem.bus = 1;
                     }
                     item = newItem;
                 }
@@ -420,6 +426,11 @@ var hdelk = (function(){
                 if ( ( !item.sources || !item.targets ) && item.route ) {
                     item.sources = [ item.route[ 0 ] ];
                     item.targets = [ item.route[ 1 ] ];
+                }
+                if ( item.reverse ) {
+                    var s = item.sources;
+                    item.sources = item.targets;
+                    item.targets = s;
                 }
                 if ( !item.labels && item.label ) {
                     item.labels = [ { text:item.label } ];

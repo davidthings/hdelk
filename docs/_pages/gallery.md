@@ -126,12 +126,12 @@ header:
                 ],
                 edges: [
                     ["usb_s.out","param1.in" ],
-                    ["param1.out","param2.in" ], 
-                    ["param1.int","f.a" ], 
-                    ["param2.int","f.b" ], 
-                    ["f.c","return.int" ], 
-                    ["return.out","unique.in" ], 
-                    ["unique.out","usb_s.in" ], 
+                    ["param1.out","param2.in" ],
+                    ["param1.int","f.a" ],
+                    ["param2.int","f.b" ],
+                    ["f.c","return.int" ],
+                    ["return.out","unique.in" ],
+                    ["unique.out","usb_s.in", -1 ],
                     ["FPGA.usb","usb_s.usb" ]
                 ] }
         ],
@@ -162,7 +162,7 @@ header:
                     ["Internals.out_stop","p1p1.out_stop"],
                     { route:["Internals.out_data","p1p1.out_data"], bus:1 },
                     ["Internals.out_valid","p1p1.out_valid"],
-                    ["p1p1.out_ready","Internals.out_ready"] 
+                    ["p1p1.out_ready","Internals.out_ready"]
                 ]
              },
             { id: "p2", type:"Consumer", inPorts: [ "in_pipe"],
@@ -176,7 +176,7 @@ header:
                     ["p2p1.in_stop","Internals.in_stop"],
                     { route:["p2p1.in_data","Internals.in_data"], bus:1 },
                     ["p2p1.in_valid","Internals.in_valid"],
-                    ["Internals.in_ready","p2p1.in_ready"] 
+                    ["Internals.in_ready","p2p1.in_ready"]
                 ] }
         ],
         edges: [
@@ -206,13 +206,13 @@ header:
                     { id: "i1", label:"Internals", type:"Verilog", ports:[ "h_in","h_out"], southPorts:[ "in","out" ], highlight:1  }
                 ],
                 edges: [
-                    ["i1.h_out","to_host"], 
+                    ["i1.h_out","to_host"],
                     ["from_host","i1.h_in"],
                     ["i1.out","n1.in"],
                     ["n1.out","i1.in"],
                     ["FPGA1.net_in","n1.net_in"],
                     ["n1.net_out","FPGA1.net_out"]
-                ] 
+                ]
             },
             { id: "FPGA2",
                 westPorts:[ "net_in" ],
@@ -222,11 +222,11 @@ header:
                     { id:"i2", label:"Internals", type:"Verilog", northPorts:[ "in","out" ], highlight:1  }
                 ],
                 edges: [
-                    ["i2.out","n2.in"],
+                    ["i2.out","n2.in",-1],
                     ["n2.out","i2.in"],
                     ["FPGA2.net_in","n2.net_in"],
                     ["n2.net_out","FPGA2.net_out"]
-                ] 
+                ]
             },
             { id: "FPGA3",
                 westPorts:[ "net_in" ],
@@ -236,11 +236,11 @@ header:
                     { id:"i3", label:"Internals", type:"Verilog", northPorts:[ "in","out" ], highlight:1  }
                 ],
                 edges: [
-                    ["i3.out","n3.in"],
+                    ["i3.out","n3.in", -1],
                     ["n3.out","i3.in"],
                     ["FPGA3.net_in","n3.net_in"],
                     ["n3.net_out","FPGA3.net_out"]
-                ] 
+                ]
             }
 
         ],
