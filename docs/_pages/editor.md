@@ -84,13 +84,14 @@ Loading
         { id:"C1", parameters:["Size"], inPorts:[ "In" ], outPorts:[ "Out" ] },
         { id:"C2",  inPorts:[ "In" ], outPorts:[ "Out" ],
             children:[
-                { id:"GC1", ports:[ "In", "Out" ] },
-                { id:"GC2", ports:[ "In", "Out" ] }
+                { id:"GC1", inPorts:[ "In",  "Loop" ], outPorts:[ "Out", ] },
+                { id:"GC2", inPorts:[ "In" ], outPorts:["Out", "Loop" ] }
             ],
             edges:[
                 ["C2.In", "GC1.In"],
                 ["GC1.Out", "GC2.In"],
                 ["GC2.Out", "C2.Out"],
+                ["GC2.Loop", "GC1.Loop", -1 ],
             ]
         },
         { id:"C3" }

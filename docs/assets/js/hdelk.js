@@ -390,13 +390,23 @@ var hdelk = (function(){
                     if ( item[ 2 ] ) {
                         if ( typeof( item[2] ) == "string" )
                             newItem.label = item[ 2 ];
-                        else
+                        else if ( item[ 2 ] == -1 ) {
+                            newItem.reverse = 1;
+                            // flip the source and target
+                            newItem.sources = [ item[ 1 ] ];
+                            newItem.targets = [ item[ 0 ] ];
+                        } else
                             newItem.bus = 1;
                     }
                     if ( item[ 3 ] ) {
                         if ( typeof( item[3] ) == "string" )
                             newItem.label = item[ 3 ];
-                        else
+                        else if ( item[ 3 ] == -1 ) {
+                            newItem.reverse = 1;
+                            // flip the source and target
+                            newItem.sources = [ item[ 1 ] ];
+                            newItem.targets = [ item[ 0 ] ];
+                        } else
                             newItem.bus = 1;
                     }
                     item = newItem;
@@ -631,8 +641,12 @@ var hdelk = (function(){
                 }
 
                 var terminatorWidth_2 = width;
-                if ( terminatorWidth_2 < 3 ) terminatorWidth_2 = 3;
-                group.rect( terminatorWidth_2 * 2, terminatorWidth_2 * 2).attr({ fill:color }).move(offsetX + endPoint.x - terminatorWidth_2, offsetY + endPoint.y - terminatorWidth_2 );
+                if ( terminatorWidth_2 < 3 )
+                    terminatorWidth_2 = 3;
+                if ( edge.reverse )
+                    group.rect( terminatorWidth_2 * 2, terminatorWidth_2 * 2).attr({ fill:color }).move(offsetX + startPoint.x - terminatorWidth_2, offsetY + startPoint.y - terminatorWidth_2 );
+                else
+                    group.rect( terminatorWidth_2 * 2, terminatorWidth_2 * 2).attr({ fill:color }).move(offsetX + endPoint.x - terminatorWidth_2, offsetY + endPoint.y - terminatorWidth_2 );
 
             } );
         }
