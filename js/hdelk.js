@@ -541,6 +541,7 @@ var hdelk = (function(){
         if ( ports ) {
             ports.forEach( function( item, index ){
                 var portText;
+                var portItemColor = ( item.highlight || item.highlight == 0 ) ? port_highlight_fill_color[ item.highlight ] : portColor;
                 if ( item.label)
                     portText = item.label;
                 else
@@ -559,8 +560,8 @@ var hdelk = (function(){
                 } else {
                     nameColor = port_text_color;
                     strokeWidth = 0;
-                    strokeColor = portColor;
-                    fillColor = portColor;
+                    strokeColor = portItemColor;
+                    fillColor = portItemColor;
                 }
 
                 group.rect(item.width, item.height).move(offsetX + child.x+item.x,offsetY + child.y+item.y)
