@@ -11,13 +11,13 @@ var hdelk = (function(){
     var node_min_width = 20;
     var node_min_height = 20;
 
-    var node_highlight_fill_color = ['#FFF', '#DDD', '#4bF','#F88', '#FE6','#7e0'];
+    var node_highlight_fill_color = ['#FFF', '#DDD', '#4bF','#F88', '#FE6','#7e0','#9FC','#900','#C3F'];
     var node_fill_color = '#FFF';
     var node_stroke_color = '#666';
     var node_highlight_stroke_width = 2;
     var node_stroke_width = 1;
     var node_name_text_color = '#666';
-    var node_highlight_name_text_color = [ '#DDD', '#222', '#46C', '#922', '#A90', '#350' ];
+    var node_highlight_name_text_color = [ '#DDD', '#222', '#46C', '#922', '#A90', '#350','#9F9','#906','#C63'];
     var node_name_font_size = 16;
     var node_type_text_color = '#666';
     var node_type_font_size = 12;
@@ -36,7 +36,7 @@ var hdelk = (function(){
     var port_name_font_size = 12;
     var port_fill_color = '#777';
     var port_text_color = '#FFF';
-    var port_highlight_fill_color = [ '#DDD', '#444', '#06d', '#C00', '#980', '#590' ];
+    var port_highlight_fill_color = [ '#DDD', '#444', '#06d', '#C00', '#980', '#590' ,'#9F9','#906','#C63'];
     var port_spacing = 4;
 
     var edge_label_text_size = 12;
@@ -44,15 +44,15 @@ var hdelk = (function(){
     var edge_label_text_color = '#777';
     var edge_label_width_padding = 4;
     var edge_label_height_padding = 4;
-    var edge_label_highlight_fill_color = [ '#DDD', '#222', '#46C', '#922', '#A90', '#350' ];
+    var edge_label_highlight_fill_color = [ '#DDD', '#222', '#46C', '#922', '#A90', '#350' ,'#9F9','#906','#C63'];
 
     var edge_width = 1;
     var edge_color = '#888';
-    var edge_highlight_color = [ '#DDD', '#444', '#06d', '#C00', '#980', '#590' ];
+    var edge_highlight_color = [ '#DDD', '#444', '#06d', '#C00', '#980', '#590','#9F9' ,'#906','#C63'];
     var edge_highlight_width = 2;
     var edge_bus_width = 6;
     var edge_bus_color = '#AAA';
-    var edge_bus_highlight_color = [ '#DDD', '#444', '#06d', '#C00', '#980', '#590' ];
+    var edge_bus_highlight_color = [ '#DDD', '#444', '#06d', '#C00', '#980', '#590' ,'#9F9','#906','#C63'];
     var edge_bus_highlight_width = 6;
 
     /**
